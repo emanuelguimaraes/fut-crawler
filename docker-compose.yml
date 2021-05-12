@@ -1,0 +1,17 @@
+version: '3.7'
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_PASSWORD: gbTKoAdj0J
+      POSTGRES_USER: fut-user
+      POSTGRES_DB: fut-database
+    ports:
+      - '5432:5432'
+    volumes:
+      - ~/Users/emanueljoseguimaraesbrito/Documents/Desenvolvimento/workspace/Database/fut:/var/lib/postgresql/data
+    networks:
+      - fut-production
+networks:
+  fut-production:
+    driver: bridge

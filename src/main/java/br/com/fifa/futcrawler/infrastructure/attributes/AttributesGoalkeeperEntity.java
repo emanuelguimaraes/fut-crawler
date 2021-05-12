@@ -14,63 +14,63 @@ public class AttributesGoalkeeperEntity extends AttributesEntity {
 
     @Column(name = "MERGULHO")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Mergulho")
-    private int mergulho = 1;
+    private int diving = 1;
 
     @Column(name = "JOGO_DE_MAOS")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Jogo de Mãos")
-    private int jogoDeMaos = 1;
+    private int handling = 1;
 
     @Column(name = "PONTAPE")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Pontapé")
-    private int pontape = 1;
+    private int kicking = 1;
 
     @Column(name = "POSICIONAMENTO_GOLEIRO")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Posicionamento")
-    private int posicionamento = 1;
+    private int positionning = 1;
 
     @Column(name = "REFLEXOS_GOLEIRO")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Reflexos")
-    private int reflexos = 1;
+    private int reflexes = 1;
 
     @Column(name = "VELOCIDADE")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Velocidade")
-    private int velocidade = 1;
+    private int speed = 1;
 
     public AttributesGoalkeeperEntity() {
 
     }
 
-    public AttributesGoalkeeperEntity(CardEntity cartao, Goalkeeper atributos) {
-        super(cartao);
-        this.mergulho = atributos.getDiving();
-        this.jogoDeMaos = atributos.getHandling();
-        this.pontape = atributos.getKicking();
-        this.posicionamento = atributos.getPositionning();
-        this.reflexos = atributos.getReflexes();
-        this.velocidade = atributos.getSpeed();
+    public AttributesGoalkeeperEntity(CardEntity card, Goalkeeper attributes) {
+        super(card);
+        this.diving = attributes.getDiving();
+        this.handling = attributes.getHandling();
+        this.kicking = attributes.getKicking();
+        this.positionning = attributes.getPositionning();
+        this.reflexes = attributes.getReflexes();
+        this.speed = attributes.getSpeed();
     }
 
-    public int getMergulho() {
-        return mergulho;
+    public int getDiving() {
+        return diving;
     }
 
-    public int getJogoDeMaos() {
-        return jogoDeMaos;
+    public int getHandling() {
+        return handling;
     }
 
-    public int getPontape() {
-        return pontape;
+    public int getKicking() {
+        return kicking;
     }
 
-    public int getPosicionamento() {
-        return posicionamento;
+    public int getPositionning() {
+        return positionning;
     }
 
-    public int getReflexos() {
-        return reflexos;
+    public int getReflexes() {
+        return reflexes;
     }
 
-    public int getVelocidade() {
-        return velocidade;
+    public int getSpeed() {
+        return speed;
     }
 }

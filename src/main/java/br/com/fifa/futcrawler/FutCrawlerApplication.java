@@ -14,16 +14,19 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class FutCrawlerApplication {
 
-	public static final int FIVE_MINUTES = 300000;
-	private Logger logger = LogManager.getLogger(FutCrawlerApplication.class);
+	private final Logger logger = LogManager.getLogger(FutCrawlerApplication.class);
 
+	private static final int FIVE_MINUTES = 300000;
 	private static final String SITE_URL = "https://www.futbin.com/21/players?page=";
 
-	@Autowired
-	private CardRepositoryImpl repository;
+	private final CardRepositoryImpl repository;
+	private final CrawlerJsoup crawlerJsoup;
 
 	@Autowired
-	private CrawlerJsoup crawlerJsoup;
+	public FutCrawlerApplication(CardRepositoryImpl repository, CrawlerJsoup crawlerJsoup) {
+		this.repository = repository;
+		this.crawlerJsoup = crawlerJsoup;
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(FutCrawlerApplication.class, args);
@@ -34,7 +37,7 @@ public class FutCrawlerApplication {
 		return args -> {
 			SaveCardsByCrawler service = new SaveCardsByCrawler(repository, crawlerJsoup);
 
-			for (int index = 264; index <= 668; index++) {
+			for (int index = 1; index <= 668; index++) {
 				try {
 					service.execute(SITE_URL.concat(Integer.toString(index)));
 

@@ -15,7 +15,6 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,19 +23,19 @@ import java.util.stream.Collectors;
 @Service
 public class CrawlerJsoup implements Crawler {
 
-    private Logger logger = LogManager.getLogger(CrawlerJsoup.class);
+    private final Logger logger = LogManager.getLogger(CrawlerJsoup.class);
 
     private static final int FIRST_ELEMENT = 0;
     private static final int SECOND_ELEMENT = 1;
-    private static final int CLUBE_INDEX = 1;
-    private static final int NACIONALIDADE_INDEX = 2;
-    private static final int LIGA_INDEX = 3;
-    private static final int FINTA_INDEX = 4;
-    private static final int PERNA_RUIM_INDEX = 5;
-    private static final int PERNA_BOA_INDEX = 7;
-    private static final int ALTURA_INDEX = 8;
-    private static final int PESO_INDEX = 9;
-    private static final int VERSAO_INDEX = 10;
+    private static final int CLUB_INDEX = 1;
+    private static final int NATION_INDEX = 2;
+    private static final int LEAGUE_INDEX = 3;
+    private static final int SKILLS_INDEX = 4;
+    private static final int WEAK_FOOT_INDEX = 5;
+    private static final int FOOT_INDEX = 7;
+    private static final int HEIGHT_INDEX = 8;
+    private static final int WEIGHT_INDEX = 9;
+    private static final int REVISION_INDEX = 10;
 
     private static final String LIST_PLAYER_CLASS_ONE = "player_tr_1";
     private static final String LIST_PLAYER_CLASS_TWO = "player_tr_2";
@@ -48,26 +47,24 @@ public class CrawlerJsoup implements Crawler {
     private static final String BIOGRAPHY_ID_ELEMENT = "info_content";
     private static final String BIOGRAPHY_TAG = "td";
     private static final String ID_RESOURCE_ATTRIBUTE = "data-player-resource";
-    private static final String NOME_CLASS = "pcdisplay-name";
-    private static final String POSICAO_CLASS = "pcdisplay-pos";
+    private static final String NAME_CLASS = "pcdisplay-name";
+    private static final String POSITION_CLASS = "pcdisplay-pos";
 
     private static final int TWO_SECONDS = 2000;
 
     @Override
     public List<SimpleCardDTO> getListCards(String url) {
         try {
-            List<SimpleCardDTO> cardsDTO = new ArrayList<>();
-
             Thread.sleep(2000);
             Document doc = Jsoup.connect(url).userAgent(CrawlerUtil.USER_AGENT).get();
 
             Elements elements = doc.getElementsByClass(LIST_PLAYER_CLASS_ONE);
             elements.addAll(doc.getElementsByClass(LIST_PLAYER_CLASS_TWO));
 
-            cardsDTO.addAll(elements
+            List<SimpleCardDTO> cardsDTO = elements
                     .stream()
-                    .map(element -> generateByElement(element))
-                    .collect(Collectors.toList()));
+                    .map(this::generateByElement)
+                    .collect(Collectors.toList());
 
             return cardsDTO;
 
@@ -93,13 +90,11 @@ public class CrawlerJsoup implements Crawler {
     @Override
     public CardDetailsDTO getCardDetails(String url) {
         try {
-            Map<String, String> fields = new HashMap<>();
-            Map<String, String> attributes = new HashMap<>();
-
             Thread.sleep(TWO_SECONDS);
             Document html = Jsoup.connect(url).userAgent(CrawlerUtil.USER_AGENT).get();
 
-            fields.putAll(getBiographyInHtml(html));
+            Map<String, String> fields = new HashMap<>(getBiographyInHtml(html));
+            Map<String, String> attributes = new HashMap<>();
 
             if (Role.GK.equals(Role.valueOf(fields.get(CrawlerUtil.POSICAO).trim().toUpperCase()))) {
                 attributes.putAll(generateAttributesGoalkeeper());
@@ -151,34 +146,30 @@ public class CrawlerJsoup implements Crawler {
 
         fields.put(CrawlerUtil.ID_RESOURCE, html.getElementsByAttribute(ID_RESOURCE_ATTRIBUTE)
                 .first().attributes().get(ID_RESOURCE_ATTRIBUTE));
-        fields.put(CrawlerUtil.NOME, getValueElement(html.getElementsByClass(NOME_CLASS),
+        fields.put(CrawlerUtil.NOME, getValueElement(html.getElementsByClass(NAME_CLASS),
                 FIRST_ELEMENT, FIRST_ELEMENT));
-        fields.put(CrawlerUtil.POSICAO, getValueElement(html.getElementsByClass(POSICAO_CLASS),
+        fields.put(CrawlerUtil.POSICAO, getValueElement(html.getElementsByClass(POSITION_CLASS),
                 FIRST_ELEMENT, FIRST_ELEMENT));
-        fields.put(CrawlerUtil.ALTURA, getValueElement(elements, getIndex(ALTURA_INDEX, sizeElements), FIRST_ELEMENT));
-        fields.put(CrawlerUtil.PESO, getValueElement(elements, getIndex(PESO_INDEX, sizeElements), FIRST_ELEMENT));
-        fields.put(CrawlerUtil.NACIONALIDADE, getValueElement(elements.get(getIndex(NACIONALIDADE_INDEX, sizeElements))
+        fields.put(CrawlerUtil.ALTURA, getValueElement(elements, getIndex(HEIGHT_INDEX, sizeElements), FIRST_ELEMENT));
+        fields.put(CrawlerUtil.PESO, getValueElement(elements, getIndex(WEIGHT_INDEX, sizeElements), FIRST_ELEMENT));
+        fields.put(CrawlerUtil.NACIONALIDADE, getValueElement(elements.get(getIndex(NATION_INDEX, sizeElements))
                 .children(), SECOND_ELEMENT, FIRST_ELEMENT));
-        fields.put(CrawlerUtil.VERSAO, getValueElement(elements, getIndex(VERSAO_INDEX, sizeElements), FIRST_ELEMENT));
-        fields.put(CrawlerUtil.FINTA, getValueElement(elements, getIndex(FINTA_INDEX, sizeElements), FIRST_ELEMENT));
+        fields.put(CrawlerUtil.VERSAO, getValueElement(elements, getIndex(REVISION_INDEX, sizeElements), FIRST_ELEMENT));
+        fields.put(CrawlerUtil.FINTA, getValueElement(elements, getIndex(SKILLS_INDEX, sizeElements), FIRST_ELEMENT));
         fields.put(CrawlerUtil.PERNA_BOA, getValueElement(elements,
-                getIndex(PERNA_BOA_INDEX, sizeElements), FIRST_ELEMENT));
+                getIndex(FOOT_INDEX, sizeElements), FIRST_ELEMENT));
         fields.put(CrawlerUtil.PERNA_RUIM, getValueElement(elements,
-                getIndex(PERNA_RUIM_INDEX, sizeElements), FIRST_ELEMENT));
-        fields.put(CrawlerUtil.CLUBE, getValueElement(elements.get(getIndex(CLUBE_INDEX, sizeElements)).children(),
+                getIndex(WEAK_FOOT_INDEX, sizeElements), FIRST_ELEMENT));
+        fields.put(CrawlerUtil.CLUBE, getValueElement(elements.get(getIndex(CLUB_INDEX, sizeElements)).children(),
                 SECOND_ELEMENT, FIRST_ELEMENT));
-        fields.put(CrawlerUtil.LIGA, getValueElement(elements.get(getIndex(LIGA_INDEX, sizeElements)).children(),
+        fields.put(CrawlerUtil.LIGA, getValueElement(elements.get(getIndex(LEAGUE_INDEX, sizeElements)).children(),
                 SECOND_ELEMENT, FIRST_ELEMENT));
 
         return fields;
     }
 
     private int getIndex(int index, int size) {
-        if (size == 17 && index < 7) {
-            return (index + 1);
-        }
-
-        if (size == 19) {
+        if ((size == 19) || (size == 17 && index < 7)) {
             return (index + 1);
         }
 

@@ -10,8 +10,8 @@ import java.util.Optional;
 @Repository
 public interface CardJpaRepository extends JpaRepository<CardEntity, Long> {
 
-    @Query("SELECT c FROM CardEntity c WHERE c.nome = :nome AND c.versao = :versao")
-    Optional<CardEntity> findByNomeAndVersao(String nome, String versao);
+    @Query("SELECT c FROM CardEntity c WHERE c.name = :name AND c.revision = :revision")
+    Optional<CardEntity> findByNomeAndVersao(String name, String revision);
 
     @Query("SELECT c FROM CardEntity c WHERE c.idResource = :idResource")
     List<CardEntity> findByIdResource(Long idResource);

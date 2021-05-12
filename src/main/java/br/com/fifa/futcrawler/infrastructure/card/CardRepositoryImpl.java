@@ -27,19 +27,22 @@ public class CardRepositoryImpl implements CardRepository {
 
     @Override
     public Optional<Card> findByNameAndRevision(String name, String revision) {
-        Optional<CardEntity> cartaoEntity = repository.findByNomeAndVersao(name, revision);
+        Optional<CardEntity> cardEntity = repository.findByNomeAndVersao(name, revision);
 
-        if (cartaoEntity.isEmpty()) {
+        if (cardEntity.isEmpty()) {
             return Optional.empty();
         }
 
-        return Optional.of(CardFacade.criar(cartaoEntity.get()));
+        return Optional.of(CardFacade.create(cardEntity.get()));
     }
 
     @Override
     public List<Card> findByResourceId(Long idResource) {
-        List<CardEntity> cartoesEntity = repository.findByIdResource(idResource);
+        List<CardEntity> cardsEntity = repository.findByIdResource(idResource);
 
-        return cartoesEntity.stream().map(CardFacade::criar).collect(Collectors.toList());
+        return cardsEntity
+                .stream()
+                .map(CardFacade::create)
+                .collect(Collectors.toList());
     }
 }

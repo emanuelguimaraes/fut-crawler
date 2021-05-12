@@ -14,113 +14,117 @@ import br.com.fifa.futcrawler.infrastructure.attributes.AttributesPlayerEntity;
 
 public class CardFacade {
 
-    public static Card criar(CardEntity cardEntity) {
-        return new Card(cardEntity.getNome(),
-                criarBiografia(cardEntity),
-                criarPosicao(cardEntity),
-                criarClube(cardEntity)
+    public static Card create(CardEntity cardEntity) {
+        return new Card(cardEntity.getName(),
+                createBiography(cardEntity),
+                createPosition(cardEntity),
+                createClub(cardEntity)
         );
     }
 
-    private static Biography criarBiografia(CardEntity cardEntity) {
-        return new Biography(
-                cardEntity.getAltura(),
-                cardEntity.getPeso(),
-                cardEntity.getNacionalidade(),
-                cardEntity.getVersao(),
-                cardEntity.getFinta(),
-                cardEntity.getPernaBoa(),
-                cardEntity.getPernaRuim());
+    private static Biography createBiography(CardEntity cardEntity) {
+        Biography biography = new Biography(
+                cardEntity.getHeight(),
+                cardEntity.getWeight(),
+                cardEntity.getNation(),
+                cardEntity.getRevision(),
+                cardEntity.getSkills(),
+                cardEntity.getFoot(),
+                cardEntity.getWeakFoot());
+
+        biography.setIdResource(cardEntity.getIdResource());
+
+        return biography;
     }
 
-    private static Position criarPosicao(CardEntity cardEntity) {
-        if (Role.GK.equals(cardEntity.getPosicao())) {
-            AttributesGoalkeeperEntity atributosGoleiro = (AttributesGoalkeeperEntity) cardEntity.getAtributos();
+    private static Position createPosition(CardEntity cardEntity) {
+        if (Role.GK.equals(cardEntity.getPosition())) {
+            AttributesGoalkeeperEntity attributesGoalkeeperEntity = (AttributesGoalkeeperEntity) cardEntity.getAttributes();
             return new Goalkeeper(
-                    atributosGoleiro.getMergulho(),
-                    atributosGoleiro.getJogoDeMaos(),
-                    atributosGoleiro.getPontape(),
-                    atributosGoleiro.getPosicionamento(),
-                    atributosGoleiro.getReflexos(),
-                    atributosGoleiro.getVelocidade()
+                    attributesGoalkeeperEntity.getDiving(),
+                    attributesGoalkeeperEntity.getHandling(),
+                    attributesGoalkeeperEntity.getKicking(),
+                    attributesGoalkeeperEntity.getPositionning(),
+                    attributesGoalkeeperEntity.getReflexes(),
+                    attributesGoalkeeperEntity.getSpeed()
             );
         } else {
-            AttributesPlayerEntity atributosJogador = (AttributesPlayerEntity) cardEntity.getAtributos();
+            AttributesPlayerEntity attributesPlayerEntity = (AttributesPlayerEntity) cardEntity.getAttributes();
             return new Player(
-                    cardEntity.getPosicao(),
-                    criarAtributosVelocidade(atributosJogador),
-                    criarAtributosFinalizacao(atributosJogador),
-                    criarAtributosPasse(atributosJogador),
-                    criarAtributosDrible(atributosJogador),
-                    criarAtributosDefesa(atributosJogador),
-                    criarAtributosFisico(atributosJogador)
+                    cardEntity.getPosition(),
+                    createPaceAttributes(attributesPlayerEntity),
+                    createShootingAttributes(attributesPlayerEntity),
+                    createPassingAttributes(attributesPlayerEntity),
+                    createDribblingAttributes(attributesPlayerEntity),
+                    createDefendingAttributes(attributesPlayerEntity),
+                    createPhysicalityAttributes(attributesPlayerEntity)
             );
         }
     }
 
-    private static Club criarClube(CardEntity cardEntity) {
+    private static Club createClub(CardEntity cardEntity) {
         return new Club(
-                cardEntity.getClube(),
-                new League(cardEntity.getLiga())
+                cardEntity.getClub(),
+                new League(cardEntity.getLeague())
         );
     }
 
-    private static Pace criarAtributosVelocidade(AttributesPlayerEntity atributos) {
+    private static Pace createPaceAttributes(AttributesPlayerEntity atributos) {
         return new Pace(
-                atributos.getAceleracao(),
-                atributos.getSprint()
+                atributos.getAcceleration(),
+                atributos.getSprintSpeed()
         );
     }
 
-    private static Shooting criarAtributosFinalizacao(AttributesPlayerEntity atributos) {
+    private static Shooting createShootingAttributes(AttributesPlayerEntity atributos) {
         return new Shooting(
-                atributos.getPosicionamento(),
-                atributos.getFinalizacao(),
-                atributos.getPotencia(),
-                atributos.getChuteDeLonge(),
-                atributos.getChutesAcrobaticos(),
-                atributos.getPenalti()
+                atributos.getPositioning(),
+                atributos.getFinishing(),
+                atributos.getShotPower(),
+                atributos.getLongShots(),
+                atributos.getVolleys(),
+                atributos.getPenalties()
         );
     }
 
-    private static Passing criarAtributosPasse(AttributesPlayerEntity atributos) {
+    private static Passing createPassingAttributes(AttributesPlayerEntity atributos) {
         return new Passing(
-                atributos.getVisao(),
-                atributos.getCruzamento(),
-                atributos.getCobrancaFalta(),
-                atributos.getPasseCurto(),
-                atributos.getPasseLongo(),
-                atributos.getEfeito()
+                atributos.getVision(),
+                atributos.getCrossing(),
+                atributos.getFkAccuracy(),
+                atributos.getShortPassing(),
+                atributos.getLongPassing(),
+                atributos.getCurve()
         );
     }
 
-    private static Dribbling criarAtributosDrible(AttributesPlayerEntity atributos) {
+    private static Dribbling createDribblingAttributes(AttributesPlayerEntity atributos) {
         return new Dribbling(
-                atributos.getAgilidade(),
-                atributos.getEquilibrio(),
-                atributos.getReflexos(),
-                atributos.getControleDeBola(),
-                atributos.getDrible(),
-                atributos.getCompostura()
+                atributos.getAgility(),
+                atributos.getBalance(),
+                atributos.getReactions(),
+                atributos.getBallControl(),
+                atributos.getDribbling(),
+                atributos.getComposure()
         );
     }
 
-    private static Defending criarAtributosDefesa(AttributesPlayerEntity atributos) {
+    private static Defending createDefendingAttributes(AttributesPlayerEntity atributos) {
         return new Defending(
-                atributos.getInterceptacao(),
-                atributos.getCabeceamento(),
-                atributos.getMarcacao(),
-                atributos.getCarrinho(),
-                atributos.getCorteEmPe()
+                atributos.getInterceptions(),
+                atributos.getHeadingAccuracy(),
+                atributos.getMarking(),
+                atributos.getStadingTackle(),
+                atributos.getSlidingTackle()
         );
     }
 
-    private static Physicality criarAtributosFisico(AttributesPlayerEntity atributos) {
+    private static Physicality createPhysicalityAttributes(AttributesPlayerEntity atributos) {
         return new Physicality(
-                atributos.getSalto(),
-                atributos.getResistencia(),
-                atributos.getForca(),
-                atributos.getAgressividade()
+                atributos.getJumping(),
+                atributos.getStamina(),
+                atributos.getStrength(),
+                atributos.getAggression()
         );
     }
 }

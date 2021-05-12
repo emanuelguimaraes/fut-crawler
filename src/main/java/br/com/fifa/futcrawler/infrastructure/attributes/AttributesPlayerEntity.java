@@ -14,270 +14,270 @@ public class AttributesPlayerEntity extends AttributesEntity {
 
     @Column(name = "ACELERACAO")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Aceleração")
-    private int aceleracao = 1;
+    private int acceleration = 1;
 
     @Column(name = "SPRINT")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Sprint")
-    private int sprint = 1;
+    private int sprintSpeed = 1;
 
     @Column(name = "POSICIONAMENTO")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Posicionamento")
-    private int posicionamento = 1;
+    private int positioning = 1;
 
     @Column(name = "FINALIZACAO")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Finalização")
-    private int finalizacao = 1;
+    private int finishing = 1;
 
     @Column(name = "POTENCIA")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Potência")
-    private int potencia = 1;
+    private int shotPower = 1;
 
     @Column(name = "CHUTE_DE_LONGE")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Chute de Longe")
-    private int chuteDeLonge = 1;
+    private int longShots = 1;
 
     @Column(name = "CHUTES_ACROBATICOS")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Chutes Acrobáticos")
-    private int chutesAcrobaticos = 1;
+    private int volleys = 1;
 
     @Column(name = "PENALTI")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Pênalti")
-    private int penalti = 1;
+    private int penalties = 1;
 
     @Column(name = "VISAO")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Visão")
-    private int visao = 1;
+    private int vision = 1;
 
     @Column(name = "CRUZAMENTO")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Cruzamento")
-    private int cruzamento = 1;
+    private int crossing = 1;
 
     @Column(name = "COBRANCAO_FALTA")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Cobrança de Falta")
-    private int cobrancaFalta = 1;
+    private int fkAccuracy = 1;
 
     @Column(name = "PASSE_CURTO")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Passe Curto")
-    private int passeCurto = 1;
+    private int shortPassing = 1;
 
     @Column(name = "PASSE_LONGO")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Passe Longo")
-    private int passeLongo = 1;
+    private int longPassing = 1;
 
     @Column(name = "EFEITO")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Efeito")
-    private int efeito = 1;
+    private int curve = 1;
 
     @Column(name = "AGILIDADE")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Agilidade")
-    private int agilidade = 1;
+    private int agility = 1;
 
     @Column(name = "EQUILIBRIO")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Equilíbrio")
-    private int equilibrio = 1;
+    private int balance = 1;
 
     @Column(name = "REFLEXOS")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Reflexos")
-    private int reflexos = 1;
+    private int reactions = 1;
 
     @Column(name = "CONTROLE_DE_BOLA")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Controle de Bola")
-    private int controleDeBola = 1;
+    private int ballControl = 1;
 
     @Column(name = "DRIBLE")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Drible")
-    private int drible = 1;
+    private int dribbling = 1;
 
     @Column(name = "COMPOSTURA")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Compostura")
-    private int compostura = 1;
+    private int composure = 1;
 
     @Column(name = "INTERCEPTACAO")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Interceptação")
-    private int interceptacao = 1;
+    private int interceptions = 1;
 
     @Column(name = "CABECEAMENTO")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Cabeceamento")
-    private int cabeceamento = 1;
+    private int headingAccuracy = 1;
 
     @Column(name = "MARCACAO")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Marcação")
-    private int marcacao = 1;
+    private int marking = 1;
 
     @Column(name = "CARRINHO")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Carrinho")
-    private int carrinho = 1;
+    private int stadingTackle = 1;
 
     @Column(name = "CORTE_EM_PE")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Corte em Pé")
-    private int corteEmPe = 1;
+    private int slidingTackle = 1;
 
     @Column(name = "SALTO")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Salto")
-    private int salto = 1;
+    private int jumping = 1;
 
     @Column(name = "RESISTENCIA")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Resistência")
-    private int resistencia = 1;
+    private int stamina = 1;
 
     @Column(name = "FORCA")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Força")
-    private int forca = 1;
+    private int strength = 1;
 
     @Column(name = "AGRESSIVIDADE")
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Agressividade")
-    private int agressividade = 1;
+    private int aggression = 1;
 
     public AttributesPlayerEntity() {
 
     }
 
-    public AttributesPlayerEntity(CardEntity cartao, Player atributos) {
-        super(cartao);
-        this.aceleracao = atributos.getPace().getAcceleration();
-        this.sprint = atributos.getPace().getSprintSpeed();
-        this.posicionamento = atributos.getShooting().getPositioning();
-        this.finalizacao = atributos.getShooting().getFinishing();
-        this.potencia = atributos.getShooting().getShotPower();
-        this.chuteDeLonge = atributos.getShooting().getLongShots();
-        this.chutesAcrobaticos = atributos.getShooting().getVolleys();
-        this.penalti = atributos.getShooting().getPenalties();
-        this.visao = atributos.getPassing().getVision();
-        this.cruzamento = atributos.getPassing().getCrossing();
-        this.cobrancaFalta = atributos.getPassing().getFkAccuracy();
-        this.passeCurto = atributos.getPassing().getShortPassing();
-        this.passeLongo = atributos.getPassing().getLongPassing();
-        this.efeito = atributos.getPassing().getCurve();
-        this.agilidade = atributos.getDribbling().getAgility();
-        this.equilibrio = atributos.getDribbling().getBalance();
-        this.reflexos = atributos.getDribbling().getReactions();
-        this.controleDeBola = atributos.getDribbling().getBallControl();
-        this.drible = atributos.getDribbling().getDribbling();
-        this.compostura = atributos.getDribbling().getComposure();
-        this.interceptacao = atributos.getDefending().getInterceptions();
-        this.cabeceamento = atributos.getDefending().getHeadingAccuracy();
-        this.marcacao = atributos.getDefending().getMarking();
-        this.carrinho = atributos.getDefending().getStadingTackle();
-        this.corteEmPe = atributos.getDefending().getSlidingTackle();
-        this.salto = atributos.getPhysicality().getJumping();
-        this.resistencia = atributos.getPhysicality().getStamina();
-        this.forca = atributos.getPhysicality().getStrength();
-        this.agressividade = atributos.getPhysicality().getAggression();
+    public AttributesPlayerEntity(CardEntity card, Player attributes) {
+        super(card);
+        this.acceleration = attributes.getPace().getAcceleration();
+        this.sprintSpeed = attributes.getPace().getSprintSpeed();
+        this.positioning = attributes.getShooting().getPositioning();
+        this.finishing = attributes.getShooting().getFinishing();
+        this.shotPower = attributes.getShooting().getShotPower();
+        this.longShots = attributes.getShooting().getLongShots();
+        this.volleys = attributes.getShooting().getVolleys();
+        this.penalties = attributes.getShooting().getPenalties();
+        this.vision = attributes.getPassing().getVision();
+        this.crossing = attributes.getPassing().getCrossing();
+        this.fkAccuracy = attributes.getPassing().getFkAccuracy();
+        this.shortPassing = attributes.getPassing().getShortPassing();
+        this.longPassing = attributes.getPassing().getLongPassing();
+        this.curve = attributes.getPassing().getCurve();
+        this.agility = attributes.getDribbling().getAgility();
+        this.balance = attributes.getDribbling().getBalance();
+        this.reactions = attributes.getDribbling().getReactions();
+        this.ballControl = attributes.getDribbling().getBallControl();
+        this.dribbling = attributes.getDribbling().getDribbling();
+        this.composure = attributes.getDribbling().getComposure();
+        this.interceptions = attributes.getDefending().getInterceptions();
+        this.headingAccuracy = attributes.getDefending().getHeadingAccuracy();
+        this.marking = attributes.getDefending().getMarking();
+        this.stadingTackle = attributes.getDefending().getStadingTackle();
+        this.slidingTackle = attributes.getDefending().getSlidingTackle();
+        this.jumping = attributes.getPhysicality().getJumping();
+        this.stamina = attributes.getPhysicality().getStamina();
+        this.strength = attributes.getPhysicality().getStrength();
+        this.aggression = attributes.getPhysicality().getAggression();
     }
 
-    public int getAceleracao() {
-        return aceleracao;
+    public int getAcceleration() {
+        return acceleration;
     }
 
-    public int getSprint() {
-        return sprint;
+    public int getSprintSpeed() {
+        return sprintSpeed;
     }
 
-    public int getPosicionamento() {
-        return posicionamento;
+    public int getPositioning() {
+        return positioning;
     }
 
-    public int getFinalizacao() {
-        return finalizacao;
+    public int getFinishing() {
+        return finishing;
     }
 
-    public int getPotencia() {
-        return potencia;
+    public int getShotPower() {
+        return shotPower;
     }
 
-    public int getChuteDeLonge() {
-        return chuteDeLonge;
+    public int getLongShots() {
+        return longShots;
     }
 
-    public int getChutesAcrobaticos() {
-        return chutesAcrobaticos;
+    public int getVolleys() {
+        return volleys;
     }
 
-    public int getPenalti() {
-        return penalti;
+    public int getPenalties() {
+        return penalties;
     }
 
-    public int getVisao() {
-        return visao;
+    public int getVision() {
+        return vision;
     }
 
-    public int getCruzamento() {
-        return cruzamento;
+    public int getCrossing() {
+        return crossing;
     }
 
-    public int getCobrancaFalta() {
-        return cobrancaFalta;
+    public int getFkAccuracy() {
+        return fkAccuracy;
     }
 
-    public int getPasseCurto() {
-        return passeCurto;
+    public int getShortPassing() {
+        return shortPassing;
     }
 
-    public int getPasseLongo() {
-        return passeLongo;
+    public int getLongPassing() {
+        return longPassing;
     }
 
-    public int getEfeito() {
-        return efeito;
+    public int getCurve() {
+        return curve;
     }
 
-    public int getAgilidade() {
-        return agilidade;
+    public int getAgility() {
+        return agility;
     }
 
-    public int getEquilibrio() {
-        return equilibrio;
+    public int getBalance() {
+        return balance;
     }
 
-    public int getReflexos() {
-        return reflexos;
+    public int getReactions() {
+        return reactions;
     }
 
-    public int getControleDeBola() {
-        return controleDeBola;
+    public int getBallControl() {
+        return ballControl;
     }
 
-    public int getDrible() {
-        return drible;
+    public int getDribbling() {
+        return dribbling;
     }
 
-    public int getCompostura() {
-        return compostura;
+    public int getComposure() {
+        return composure;
     }
 
-    public int getInterceptacao() {
-        return interceptacao;
+    public int getInterceptions() {
+        return interceptions;
     }
 
-    public int getCabeceamento() {
-        return cabeceamento;
+    public int getHeadingAccuracy() {
+        return headingAccuracy;
     }
 
-    public int getMarcacao() {
-        return marcacao;
+    public int getMarking() {
+        return marking;
     }
 
-    public int getCarrinho() {
-        return carrinho;
+    public int getStadingTackle() {
+        return stadingTackle;
     }
 
-    public int getCorteEmPe() {
-        return corteEmPe;
+    public int getSlidingTackle() {
+        return slidingTackle;
     }
 
-    public int getSalto() {
-        return salto;
+    public int getJumping() {
+        return jumping;
     }
 
-    public int getResistencia() {
-        return resistencia;
+    public int getStamina() {
+        return stamina;
     }
 
-    public int getForca() {
-        return forca;
+    public int getStrength() {
+        return strength;
     }
 
-    public int getAgressividade() {
-        return agressividade;
+    public int getAggression() {
+        return aggression;
     }
 }

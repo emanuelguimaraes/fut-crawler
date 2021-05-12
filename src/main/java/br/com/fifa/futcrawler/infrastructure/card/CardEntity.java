@@ -23,74 +23,74 @@ public class CardEntity {
     private Long id;
 
     @Column(name = "NOME", nullable = false)
-    private String nome;
+    private String name;
 
     @Column(name = "ALTURA", nullable = false)
     @Size(min = 1, max = 300, message = "Valor inválido para o campo Altura")
-    private int altura;
+    private int height;
 
     @Column(name = "PESO", nullable = false)
     @Size(min = 1, max = 300, message = "Valor inválido para o campo Peso")
-    private int peso;
+    private int weight;
 
     @Column(name = "CLUBE", nullable = false)
-    private String clube;
+    private String club;
 
     @Column(name = "LIGA", nullable = false)
-    private String liga;
+    private String league;
 
     @Column(name = "NACIONALIDADE", nullable = false)
-    private String nacionalidade;
+    private String nation;
 
     @Column(name = "VERSAO", nullable = false)
-    private String versao;
+    private String revision;
 
     @Column(name = "FINTA", nullable = false)
     @Size(min = 1, max = 5, message = "Valor inválido para o atributo de Finta")
-    private int finta;
+    private int skills;
 
     @Column(name = "PERNA_BOA", nullable = false)
     @Enumerated(EnumType.STRING)
-    private Foot pernaBoa;
+    private Foot foot;
 
     @Column(name = "PERNA_RUIM", nullable = false)
     @Size(min = 1, max = 5, message = "Valor inválido para o atributo de Perna Ruim")
-    private int pernaRuim;
+    private int weakFoot;
 
     @Column(name = "POSICAO", nullable = false)
     @Enumerated(EnumType.STRING)
-    private Role posicao;
+    private Role position;
 
     @Column(name = "ID_RESOURCE", nullable = false)
     private Long idResource;
 
     @OneToOne(mappedBy = "card", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private AttributesEntity atributos;
+    private AttributesEntity attributes;
 
     public CardEntity() {
 
     }
 
     public CardEntity(Card card) {
-        this.nome = card.getName();
-        this.altura = card.getBiography().getHeight();
-        this.peso = card.getBiography().getWeight();
-        this.clube = card.getClub().getName();
-        this.liga = card.getClub().getLeague().getName();
-        this.nacionalidade = card.getBiography().getNation();
-        this.versao = card.getBiography().getRevision();
-        this.finta = card.getBiography().getSkills();
-        this.pernaBoa = card.getBiography().getFoot();
-        this.pernaRuim = card.getBiography().getWeakFoot();
-        this.posicao = card.getPosition().getName();
+        this.name = card.getName();
+        this.height = card.getBiography().getHeight();
+        this.weight = card.getBiography().getWeight();
+        this.club = card.getClub().getName();
+        this.league = card.getClub().getLeague().getName();
+        this.nation = card.getBiography().getNation();
+        this.revision = card.getBiography().getRevision();
+        this.skills = card.getBiography().getSkills();
+        this.foot = card.getBiography().getFoot();
+        this.weakFoot = card.getBiography().getWeakFoot();
+        this.position = card.getPosition().getName();
         this.idResource = card.getBiography().getIdResource();
 
         if (card.getPosition() instanceof Goalkeeper) {
-            this.atributos = new AttributesGoalkeeperEntity(this, (Goalkeeper) card.getPosition());
+            this.attributes = new AttributesGoalkeeperEntity(this, (Goalkeeper) card.getPosition());
         }
 
         if (card.getPosition() instanceof Player) {
-            this.atributos = new AttributesPlayerEntity(this, (Player) card.getPosition());
+            this.attributes = new AttributesPlayerEntity(this, (Player) card.getPosition());
         }
     }
 
@@ -98,55 +98,55 @@ public class CardEntity {
         return id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public int getAltura() {
-        return altura;
+    public int getHeight() {
+        return height;
     }
 
-    public int getPeso() {
-        return peso;
+    public int getWeight() {
+        return weight;
     }
 
-    public String getClube() {
-        return clube;
+    public String getClub() {
+        return club;
     }
 
-    public String getLiga() {
-        return liga;
+    public String getLeague() {
+        return league;
     }
 
-    public String getNacionalidade() {
-        return nacionalidade;
+    public String getNation() {
+        return nation;
     }
 
-    public String getVersao() {
-        return versao;
+    public String getRevision() {
+        return revision;
     }
 
-    public int getFinta() {
-        return finta;
+    public int getSkills() {
+        return skills;
     }
 
-    public Foot getPernaBoa() {
-        return pernaBoa;
+    public Foot getFoot() {
+        return foot;
     }
 
-    public int getPernaRuim() {
-        return pernaRuim;
+    public int getWeakFoot() {
+        return weakFoot;
     }
 
-    public Role getPosicao() {
-        return posicao;
+    public Role getPosition() {
+        return position;
     }
 
     public Long getIdResource() {
         return idResource;
     }
 
-    public AttributesEntity getAtributos() {
-        return atributos;
+    public AttributesEntity getAttributes() {
+        return attributes;
     }
 }

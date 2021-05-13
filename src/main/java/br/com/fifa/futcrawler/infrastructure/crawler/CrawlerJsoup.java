@@ -3,6 +3,7 @@ package br.com.fifa.futcrawler.infrastructure.crawler;
 import br.com.fifa.futcrawler.application.crawler.Crawler;
 import br.com.fifa.futcrawler.application.crawler.dto.CardDetailsDTO;
 import br.com.fifa.futcrawler.application.crawler.dto.SimpleCardDTO;
+import br.com.fifa.futcrawler.application.crawler.exception.CrawlerException;
 import br.com.fifa.futcrawler.application.crawler.util.CrawlerUtil;
 import br.com.fifa.futcrawler.domain.position.Role;
 import org.apache.logging.log4j.LogManager;
@@ -53,9 +54,9 @@ public class CrawlerJsoup implements Crawler {
     private static final int TWO_SECONDS = 2000;
 
     @Override
-    public List<SimpleCardDTO> getListCards(String url) {
+    public List<SimpleCardDTO> getListCards(String url) throws CrawlerException {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(TWO_SECONDS);
             Document doc = Jsoup.connect(url).userAgent(CrawlerUtil.USER_AGENT).get();
 
             Elements elements = doc.getElementsByClass(LIST_PLAYER_CLASS_ONE);
@@ -66,11 +67,13 @@ public class CrawlerJsoup implements Crawler {
                     .map(this::generateByElement)
                     .collect(Collectors.toList());
 
+            logger.info(String.format("Carregado elementos da requisição %s", url));
+
             return cardsDTO;
 
         } catch (IOException | InterruptedException e) {
             logger.error(e.getMessage());
-            throw new RuntimeException(e.getMessage());
+            throw new CrawlerException(e.getMessage());
         }
     }
 
@@ -88,7 +91,7 @@ public class CrawlerJsoup implements Crawler {
     }
 
     @Override
-    public CardDetailsDTO getCardDetails(String url) {
+    public CardDetailsDTO getCardDetails(String url) throws CrawlerException {
         try {
             Thread.sleep(TWO_SECONDS);
             Document html = Jsoup.connect(url).userAgent(CrawlerUtil.USER_AGENT).get();
@@ -108,7 +111,7 @@ public class CrawlerJsoup implements Crawler {
 
         } catch (IOException | InterruptedException e) {
             logger.error(e.getMessage());
-            throw new RuntimeException(e.getMessage());
+            throw new CrawlerException(e.getMessage());
         }
     }
 

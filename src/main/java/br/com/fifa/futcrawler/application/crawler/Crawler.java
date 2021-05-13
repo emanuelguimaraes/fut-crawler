@@ -2,6 +2,7 @@ package br.com.fifa.futcrawler.application.crawler;
 
 import br.com.fifa.futcrawler.application.crawler.dto.CardDetailsDTO;
 import br.com.fifa.futcrawler.application.crawler.dto.SimpleCardDTO;
+import br.com.fifa.futcrawler.application.crawler.exception.CrawlerException;
 import br.com.fifa.futcrawler.application.crawler.util.CrawlerUtil;
 
 import java.util.HashMap;
@@ -10,8 +11,8 @@ import java.util.Map;
 
 public interface Crawler {
 
-    List<SimpleCardDTO> getListCards(String url);
-    CardDetailsDTO getCardDetails(String url);
+    List<SimpleCardDTO> getListCards(String url) throws CrawlerException;
+    CardDetailsDTO getCardDetails(String url) throws CrawlerException;
 
     default Map<String, String> generateAttributesGoalkeeper() {
         Map<String, String> attributes = new HashMap<>();

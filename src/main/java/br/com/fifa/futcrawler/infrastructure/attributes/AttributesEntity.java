@@ -20,9 +20,7 @@ public abstract class AttributesEntity {
     @JoinColumn(name = "ID_CARTAO")
     private CardEntity card;
 
-    public AttributesEntity() {
-
-    }
+    public AttributesEntity() { }
 
     public AttributesEntity(CardEntity card) {
         this.card = card;

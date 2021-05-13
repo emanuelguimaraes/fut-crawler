@@ -1,13 +1,12 @@
 package br.com.fifa.futcrawler.application.crawler;
 
-import br.com.fifa.futcrawler.application.Command;
 import br.com.fifa.futcrawler.application.card.SaveCard;
 import br.com.fifa.futcrawler.application.crawler.dto.SimpleCardDTO;
 import br.com.fifa.futcrawler.domain.card.CardRepository;
 
 import java.util.List;
 
-public class SaveCardsByCrawler extends Command<String> {
+public class SaveCardsByCrawler {
 
     private final CardRepository repositorio;
     private final Crawler crawler;
@@ -19,7 +18,6 @@ public class SaveCardsByCrawler extends Command<String> {
         this.saveCard = new SaveCard(repositorio);
     }
 
-    @Override
     public void execute(String url) {
         List<SimpleCardDTO> cards = crawler.getListCards(url);
 

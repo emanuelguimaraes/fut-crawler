@@ -1,5 +1,8 @@
 package br.com.fifa.futcrawler.domain.position;
 
+import java.math.BigDecimal;
+import java.util.Map;
+
 public class Goalkeeper extends Position {
 
     private int diving;
@@ -17,6 +20,25 @@ public class Goalkeeper extends Position {
         this.positionning = positionning;
         this.reflexes = reflexes;
         this.speed = speed;
+    }
+
+    @Override
+    public BigDecimal getOverralByAttributes(Map<String, Integer> attributesLevel) {
+        try {
+            BigDecimal overral = BigDecimal.ZERO;
+
+            overral.add(multiplyAttribute(this.diving, attributesLevel.get("diving")));
+            overral.add(multiplyAttribute(this.handling, attributesLevel.get("handling")));
+            overral.add(multiplyAttribute(this.kicking, attributesLevel.get("kicking")));
+            overral.add(multiplyAttribute(this.positionning, attributesLevel.get("positionning")));
+            overral.add(multiplyAttribute(this.reflexes, attributesLevel.get("reflexes")));
+            overral.add(multiplyAttribute(this.speed, attributesLevel.get("speed")));
+
+            return overral.divide(new BigDecimal(attributesLevel.size()));
+
+        } catch (ClassCastException | NullPointerException e) {
+            throw new RuntimeException("Erro durante o calculo do overral");
+        }
     }
 
     public int getDiving() {

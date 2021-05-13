@@ -67,9 +67,7 @@ public class CardEntity {
     @OneToOne(mappedBy = "card", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private AttributesEntity attributes;
 
-    public CardEntity() {
-
-    }
+    public CardEntity() { }
 
     public CardEntity(Card card) {
         this.name = card.getName();

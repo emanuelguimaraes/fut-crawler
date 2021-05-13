@@ -5,6 +5,8 @@ import java.util.Optional;
 
 public interface CardRepository {
 
+    Optional<Card> findById(Long id);
+
     void save(Card card);
 
     Optional<Card> findByNameAndRevision(String name, String revision);

@@ -32,7 +32,7 @@ public class FutCrawlerApplication {
 		SpringApplication.run(FutCrawlerApplication.class, args);
 	}
 
-	@Bean
+	/*@Bean
 	public CommandLineRunner commandLineRunner() {
 		return args -> {
 			SaveCardsByCrawler service = new SaveCardsByCrawler(repository, crawlerJsoup);
@@ -51,5 +51,5 @@ public class FutCrawlerApplication {
 				}
 			}
 		};
-	}
+	}*/
 }

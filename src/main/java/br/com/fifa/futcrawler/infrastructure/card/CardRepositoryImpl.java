@@ -20,6 +20,17 @@ public class CardRepositoryImpl implements CardRepository {
     }
 
     @Override
+    public Optional<Card> findById(Long id) {
+        Optional<CardEntity> cardEntity = repository.findById(id);
+
+        if (cardEntity.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return Optional.of(CardFacade.create(cardEntity.get()));
+    }
+
+    @Override
     public void save(Card card) {
         CardEntity cardEntity = new CardEntity(card);
         repository.save(cardEntity);

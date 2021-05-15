@@ -1,15 +1,15 @@
 package br.com.fifa.futcrawler.domain.attributes;
 
-public class Dribbling {
+public class Dribbling<T> {
 
-    private int agility;
-    private int balance;
-    private int reactions;
-    private int ballControl;
-    private int dribbling;
-    private int composure;
+    private T agility;
+    private T balance;
+    private T reactions;
+    private T ballControl;
+    private T dribbling;
+    private T composure;
 
-    public Dribbling(int agility, int balance, int reactions, int ballControl, int dribbling, int composure) {
+    public Dribbling(T agility, T balance, T reactions, T ballControl, T dribbling, T composure) {
         this.agility = agility;
         this.balance = balance;
         this.reactions = reactions;
@@ -18,27 +18,27 @@ public class Dribbling {
         this.composure = composure;
     }
 
-    public int getAgility() {
+    public T getAgility() {
         return agility;
     }
 
-    public int getBalance() {
+    public T getBalance() {
         return balance;
     }
 
-    public int getReactions() {
+    public T getReactions() {
         return reactions;
     }
 
-    public int getBallControl() {
+    public T getBallControl() {
         return ballControl;
     }
 
-    public int getDribbling() {
+    public T getDribbling() {
         return dribbling;
     }
 
-    public int getComposure() {
+    public T getComposure() {
         return composure;
     }
 }

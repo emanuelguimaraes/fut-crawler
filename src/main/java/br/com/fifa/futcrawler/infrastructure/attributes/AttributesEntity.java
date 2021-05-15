@@ -20,6 +20,9 @@ public abstract class AttributesEntity {
     @JoinColumn(name = "ID_CARTAO")
     private CardEntity card;
 
+    @Column(name = "TIPO", nullable = false, insertable = false, updatable = false)
+    private String type;
+
     public AttributesEntity() { }
 
     public AttributesEntity(CardEntity card) {
@@ -32,5 +35,9 @@ public abstract class AttributesEntity {
 
     public CardEntity getCard() {
         return card;
+    }
+
+    public String getType() {
+        return type;
     }
 }

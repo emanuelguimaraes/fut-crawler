@@ -1,26 +1,23 @@
 package br.com.fifa.futcrawler.domain.position;
 
-import br.com.fifa.futcrawler.domain.attributes.Defending;
-import br.com.fifa.futcrawler.domain.attributes.Dribbling;
-import br.com.fifa.futcrawler.domain.attributes.Shooting;
-import br.com.fifa.futcrawler.domain.attributes.Physicality;
-import br.com.fifa.futcrawler.domain.attributes.Passing;
-import br.com.fifa.futcrawler.domain.attributes.Pace;
+import br.com.fifa.futcrawler.domain.attributes.*;
+import br.com.fifa.futcrawler.domain.attributes.weight.AttributesWeight;
+import br.com.fifa.futcrawler.domain.attributes.weight.WeightPlayer;
+import br.com.fifa.futcrawler.domain.card.util.CardUtil;
 
 import java.math.BigDecimal;
-import java.util.Map;
 
 public class Player extends Position {
 
-    private Pace pace;
-    private Shooting shooting;
-    private Passing passing;
-    private Dribbling dribbling;
-    private Defending defending;
-    private Physicality physicality;
+    private Pace<Integer> pace;
+    private Shooting<Integer> shooting;
+    private Passing<Integer> passing;
+    private Dribbling<Integer> dribbling;
+    private Defending<Integer> defending;
+    private Physicality<Integer> physicality;
 
-    public Player(Role nome, Pace pace, Shooting shooting, Passing passing, Dribbling dribbling,
-                  Defending defending, Physicality physicality) {
+    public Player(Role nome, Pace<Integer> pace, Shooting<Integer> shooting, Passing<Integer> passing,
+                  Dribbling<Integer> dribbling, Defending<Integer> defending, Physicality<Integer> physicality) {
         super(nome);
         this.pace = pace;
         this.shooting = shooting;
@@ -31,68 +28,69 @@ public class Player extends Position {
     }
 
     @Override
-    public BigDecimal getOverralByAttributes(Map<String, Integer> attributesLevel) {
+    public BigDecimal getOverralByAttributes(AttributesWeight weight) {
         try {
+            WeightPlayer attributes = (WeightPlayer) weight;
             BigDecimal overral = BigDecimal.ZERO;
 
-            overral.add(multiplyAttribute(this.pace.getAcceleration(), attributesLevel.get("acceleration")));
-            overral.add(multiplyAttribute(this.pace.getSprintSpeed(), attributesLevel.get("sprintSpeed")));
-            overral.add(multiplyAttribute(this.shooting.getPositioning(), attributesLevel.get("positioning")));
-            overral.add(multiplyAttribute(this.shooting.getFinishing(), attributesLevel.get("finishing")));
-            overral.add(multiplyAttribute(this.shooting.getShotPower(), attributesLevel.get("shotPower")));
-            overral.add(multiplyAttribute(this.shooting.getLongShots(), attributesLevel.get("longShots")));
-            overral.add(multiplyAttribute(this.shooting.getVolleys(), attributesLevel.get("volleys")));
-            overral.add(multiplyAttribute(this.shooting.getPenalties(), attributesLevel.get("penalties")));
-            overral.add(multiplyAttribute(this.passing.getVision(), attributesLevel.get("vision")));
-            overral.add(multiplyAttribute(this.passing.getFkAccuracy(), attributesLevel.get("fkAccuracy")));
-            overral.add(multiplyAttribute(this.passing.getCrossing(), attributesLevel.get("crossing")));
-            overral.add(multiplyAttribute(this.passing.getShortPassing(), attributesLevel.get("shortPassing")));
-            overral.add(multiplyAttribute(this.passing.getLongPassing(), attributesLevel.get("longPassing")));
-            overral.add(multiplyAttribute(this.passing.getCurve(), attributesLevel.get("curve")));
-            overral.add(multiplyAttribute(this.dribbling.getAgility(), attributesLevel.get("agility")));
-            overral.add(multiplyAttribute(this.dribbling.getBalance(), attributesLevel.get("balance")));
-            overral.add(multiplyAttribute(this.dribbling.getReactions(), attributesLevel.get("reactions")));
-            overral.add(multiplyAttribute(this.dribbling.getBallControl(), attributesLevel.get("ballControl")));
-            overral.add(multiplyAttribute(this.dribbling.getDribbling(), attributesLevel.get("dribbling")));
-            overral.add(multiplyAttribute(this.dribbling.getComposure(), attributesLevel.get("composure")));
-            overral.add(multiplyAttribute(this.defending.getInterceptions(), attributesLevel.get("interceptions")));
-            overral.add(multiplyAttribute(this.defending.getHeadingAccuracy(), attributesLevel.get("headingAccuracy")));
-            overral.add(multiplyAttribute(this.defending.getMarking(), attributesLevel.get("marking")));
-            overral.add(multiplyAttribute(this.defending.getStadingTackle(), attributesLevel.get("stadingTackle")));
-            overral.add(multiplyAttribute(this.defending.getSlidingTackle(), attributesLevel.get("slidingTackle")));
-            overral.add(multiplyAttribute(this.physicality.getJumping(), attributesLevel.get("jumping")));
-            overral.add(multiplyAttribute(this.physicality.getStamina(), attributesLevel.get("stamina")));
-            overral.add(multiplyAttribute(this.physicality.getStrength(), attributesLevel.get("strength")));
-            overral.add(multiplyAttribute(this.physicality.getAggression(), attributesLevel.get("aggression")));
+            overral.add(multiplyAttribute(this.pace.getAcceleration(), attributes.getPace().getAcceleration()));
+            overral.add(multiplyAttribute(this.pace.getSprintSpeed(), attributes.getPace().getSprintSpeed()));
+            overral.add(multiplyAttribute(this.shooting.getPositioning(), attributes.getShooting().getPositioning()));
+            overral.add(multiplyAttribute(this.shooting.getFinishing(), attributes.getShooting().getFinishing()));
+            overral.add(multiplyAttribute(this.shooting.getShotPower(), attributes.getShooting().getShotPower()));
+            overral.add(multiplyAttribute(this.shooting.getLongShots(), attributes.getShooting().getLongShots()));
+            overral.add(multiplyAttribute(this.shooting.getVolleys(), attributes.getShooting().getVolleys()));
+            overral.add(multiplyAttribute(this.shooting.getPenalties(), attributes.getShooting().getPenalties()));
+            overral.add(multiplyAttribute(this.passing.getVision(), attributes.getPassing().getVision()));
+            overral.add(multiplyAttribute(this.passing.getCrossing(), attributes.getPassing().getCrossing()));
+            overral.add(multiplyAttribute(this.passing.getFkAccuracy(), attributes.getPassing().getFkAccuracy()));
+            overral.add(multiplyAttribute(this.passing.getShortPassing(), attributes.getPassing().getShortPassing()));
+            overral.add(multiplyAttribute(this.passing.getLongPassing(), attributes.getPassing().getLongPassing()));
+            overral.add(multiplyAttribute(this.passing.getCurve(), attributes.getPassing().getCurve()));
+            overral.add(multiplyAttribute(this.dribbling.getAgility(), attributes.getDribbling().getAgility()));
+            overral.add(multiplyAttribute(this.dribbling.getBalance(), attributes.getDribbling().getBalance()));
+            overral.add(multiplyAttribute(this.dribbling.getReactions(), attributes.getDribbling().getReactions()));
+            overral.add(multiplyAttribute(this.dribbling.getBallControl(), attributes.getDribbling().getBallControl()));
+            overral.add(multiplyAttribute(this.dribbling.getDribbling(), attributes.getDribbling().getDribbling()));
+            overral.add(multiplyAttribute(this.dribbling.getComposure(), attributes.getDribbling().getComposure()));
+            overral.add(multiplyAttribute(this.defending.getInterceptions(), attributes.getDefending().getInterceptions()));
+            overral.add(multiplyAttribute(this.defending.getHeadingAccuracy(), attributes.getDefending().getHeadingAccuracy()));
+            overral.add(multiplyAttribute(this.defending.getMarking(), attributes.getDefending().getMarking()));
+            overral.add(multiplyAttribute(this.defending.getStadingTackle(), attributes.getDefending().getStadingTackle()));
+            overral.add(multiplyAttribute(this.defending.getSlidingTackle(), attributes.getDefending().getSlidingTackle()));
+            overral.add(multiplyAttribute(this.physicality.getJumping(), attributes.getPhysicality().getJumping()));
+            overral.add(multiplyAttribute(this.physicality.getStamina(), attributes.getPhysicality().getStamina()));
+            overral.add(multiplyAttribute(this.physicality.getStrength(), attributes.getPhysicality().getStrength()));
+            overral.add(multiplyAttribute(this.physicality.getAggression(), attributes.getPhysicality().getAggression()));
 
-            return overral.divide(new BigDecimal(attributesLevel.size()));
+            return overral.divide(CardUtil.TOTAL_ATTRIBUTES_PLAYER);
 
         } catch (ClassCastException | NullPointerException e) {
             throw new RuntimeException("Erro durante o calculo do overral");
         }
     }
 
-    public Pace getPace() {
+    public Pace<Integer> getPace() {
         return pace;
     }
 
-    public Shooting getShooting() {
+    public Shooting<Integer> getShooting() {
         return shooting;
     }
 
-    public Passing getPassing() {
+    public Passing<Integer> getPassing() {
         return passing;
     }
 
-    public Dribbling getDribbling() {
+    public Dribbling<Integer> getDribbling() {
         return dribbling;
     }
 
-    public Defending getDefending() {
+    public Defending<Integer> getDefending() {
         return defending;
     }
 
-    public Physicality getPhysicality() {
+    public Physicality<Integer> getPhysicality() {
         return physicality;
     }
 }

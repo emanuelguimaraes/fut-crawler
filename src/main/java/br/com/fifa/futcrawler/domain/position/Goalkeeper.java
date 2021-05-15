@@ -1,7 +1,10 @@
 package br.com.fifa.futcrawler.domain.position;
 
+import br.com.fifa.futcrawler.domain.attributes.weight.AttributesWeight;
+import br.com.fifa.futcrawler.domain.attributes.weight.WeightGoalkeeper;
+import br.com.fifa.futcrawler.domain.card.util.CardUtil;
+
 import java.math.BigDecimal;
-import java.util.Map;
 
 public class Goalkeeper extends Position {
 
@@ -23,18 +26,19 @@ public class Goalkeeper extends Position {
     }
 
     @Override
-    public BigDecimal getOverralByAttributes(Map<String, Integer> attributesLevel) {
+    public BigDecimal getOverralByAttributes(AttributesWeight weight) {
         try {
+            WeightGoalkeeper attributes = (WeightGoalkeeper) weight;
             BigDecimal overral = BigDecimal.ZERO;
 
-            overral.add(multiplyAttribute(this.diving, attributesLevel.get("diving")));
-            overral.add(multiplyAttribute(this.handling, attributesLevel.get("handling")));
-            overral.add(multiplyAttribute(this.kicking, attributesLevel.get("kicking")));
-            overral.add(multiplyAttribute(this.positionning, attributesLevel.get("positionning")));
-            overral.add(multiplyAttribute(this.reflexes, attributesLevel.get("reflexes")));
-            overral.add(multiplyAttribute(this.speed, attributesLevel.get("speed")));
+            overral.add(multiplyAttribute(this.diving, attributes.getDiving()));
+            overral.add(multiplyAttribute(this.handling, attributes.getHandling()));
+            overral.add(multiplyAttribute(this.kicking, attributes.getKicking()));
+            overral.add(multiplyAttribute(this.positionning, attributes.getPositionning()));
+            overral.add(multiplyAttribute(this.reflexes, attributes.getReflexes()));
+            overral.add(multiplyAttribute(this.speed, attributes.getSpeed()));
 
-            return overral.divide(new BigDecimal(attributesLevel.size()));
+            return overral.divide(CardUtil.TOTAL_ATTRIBUTES_GOALKEEPER);
 
         } catch (ClassCastException | NullPointerException e) {
             throw new RuntimeException("Erro durante o calculo do overral");

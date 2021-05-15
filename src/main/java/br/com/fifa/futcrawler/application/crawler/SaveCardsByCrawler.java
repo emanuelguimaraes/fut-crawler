@@ -15,14 +15,14 @@ public class SaveCardsByCrawler {
     private static final int FIVE_MINUTES = 300000;
     private static final String SITE_URL = "https://www.futbin.com/21/players?page=";
 
-    private final CardRepository repositorio;
+    private final CardRepository repository;
     private final Crawler crawler;
-    private SaveCard saveCard;
+    private final SaveCard saveCard;
 
-    public SaveCardsByCrawler(CardRepository repositorio, Crawler crawler) {
-        this.repositorio = repositorio;
+    public SaveCardsByCrawler(CardRepository repository, Crawler crawler) {
+        this.repository = repository;
         this.crawler = crawler;
-        this.saveCard = new SaveCard(repositorio);
+        this.saveCard = new SaveCard(repository);
     }
 
     public CrawlerResponse execute(int initialIndex, int finalIndex) {
@@ -33,7 +33,7 @@ public class SaveCardsByCrawler {
                 try {
                     List<SimpleCardDTO> cards = crawler.getListCards(SITE_URL.concat(Integer.toString(index)))
                             .stream()
-                            .filter(card -> repositorio.findByResourceId(card.getResourceId()).isEmpty())
+                            .filter(card -> repository.findByResourceId(card.getResourceId()).isEmpty())
                             .collect(Collectors.toList());
 
                     for (SimpleCardDTO card : cards) {

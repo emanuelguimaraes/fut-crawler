@@ -15,7 +15,8 @@ import br.com.fifa.futcrawler.infrastructure.attributes.AttributesPlayerEntity;
 public class CardFacade {
 
     public static Card create(CardEntity cardEntity) {
-        return new Card(cardEntity.getName(),
+        return new Card(cardEntity.getId(),
+                cardEntity.getName(),
                 createBiography(cardEntity),
                 createPosition(cardEntity),
                 createClub(cardEntity)

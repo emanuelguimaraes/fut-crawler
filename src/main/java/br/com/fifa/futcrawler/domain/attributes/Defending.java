@@ -1,14 +1,14 @@
 package br.com.fifa.futcrawler.domain.attributes;
 
-public class Defending {
+public class Defending<T> {
 
-    private int interceptions;
-    private int headingAccuracy;
-    private int marking;
-    private int stadingTackle;
-    private int slidingTackle;
+    private T interceptions;
+    private T headingAccuracy;
+    private T marking;
+    private T stadingTackle;
+    private T slidingTackle;
 
-    public Defending(int interceptions, int headingAccuracy, int marking, int stadingTackle, int slidingTackle) {
+    public Defending(T interceptions, T headingAccuracy, T marking, T stadingTackle, T slidingTackle) {
         this.interceptions = interceptions;
         this.headingAccuracy = headingAccuracy;
         this.marking = marking;
@@ -16,23 +16,23 @@ public class Defending {
         this.slidingTackle = slidingTackle;
     }
 
-    public int getInterceptions() {
+    public T getInterceptions() {
         return interceptions;
     }
 
-    public int getHeadingAccuracy() {
+    public T getHeadingAccuracy() {
         return headingAccuracy;
     }
 
-    public int getMarking() {
+    public T getMarking() {
         return marking;
     }
 
-    public int getStadingTackle() {
+    public T getStadingTackle() {
         return stadingTackle;
     }
 
-    public int getSlidingTackle() {
+    public T getSlidingTackle() {
         return slidingTackle;
     }
 }

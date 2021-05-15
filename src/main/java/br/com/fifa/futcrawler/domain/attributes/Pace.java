@@ -1,20 +1,20 @@
 package br.com.fifa.futcrawler.domain.attributes;
 
-public class Pace {
+public class Pace<T> {
 
-    private int acceleration;
-    private int sprintSpeed;
+    private T acceleration;
+    private T sprintSpeed;
 
-    public Pace(int acceleration, int sprintSpeed) {
+    public Pace(T acceleration, T sprintSpeed) {
         this.acceleration = acceleration;
         this.sprintSpeed = sprintSpeed;
     }
 
-    public int getAcceleration() {
+    public T getAcceleration() {
         return acceleration;
     }
 
-    public int getSprintSpeed() {
+    public T getSprintSpeed() {
         return sprintSpeed;
     }
 }

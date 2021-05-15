@@ -2,7 +2,10 @@ package br.com.fifa.futcrawler.infrastructure.card;
 
 import br.com.fifa.futcrawler.domain.card.Card;
 import br.com.fifa.futcrawler.domain.card.CardRepository;
+import br.com.fifa.futcrawler.domain.card.dto.CardDTO;
+import br.com.fifa.futcrawler.domain.position.Role;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +14,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class CardRepositoryImpl implements CardRepository {
+
+    private static final int TOTAL_ITENS_PER_PAGE = 10;
 
     private final CardJpaRepository repository;
 
@@ -28,6 +33,11 @@ public class CardRepositoryImpl implements CardRepository {
         }
 
         return Optional.of(CardFacade.create(cardEntity.get()));
+    }
+
+    @Override
+    public List<CardDTO> findAllByAttributesType(String type, Role position, int page) {
+        return repository.findAllByAttributesType(position, PageRequest.of(page, TOTAL_ITENS_PER_PAGE));
     }
 
     @Override

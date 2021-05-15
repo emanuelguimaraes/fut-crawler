@@ -1,231 +1,232 @@
 package br.com.fifa.futcrawler.application.crawler.dto;
 
-import br.com.fifa.futcrawler.application.crawler.util.CrawlerUtil;
 import br.com.fifa.futcrawler.domain.attributes.*;
 import br.com.fifa.futcrawler.domain.biography.Biography;
 import br.com.fifa.futcrawler.domain.biography.Foot;
 import br.com.fifa.futcrawler.domain.card.Card;
+import br.com.fifa.futcrawler.domain.card.util.CardUtil;
 import br.com.fifa.futcrawler.domain.club.Club;
 import br.com.fifa.futcrawler.domain.club.League;
-import br.com.fifa.futcrawler.domain.position.Role;
 import br.com.fifa.futcrawler.domain.position.Goalkeeper;
 import br.com.fifa.futcrawler.domain.position.Player;
 import br.com.fifa.futcrawler.domain.position.Position;
+import br.com.fifa.futcrawler.domain.position.Role;
 
 import java.util.Map;
 
 public class CardDetailsDTO {
 
-    private String nome;
-    private int altura;
-    private int peso;
-    private String nacionalidade;
-    private String versao;
-    private int finta;
-    private Foot pernaBoa;
-    private int pernaRuim;
-    private Role posicao;
-    private int aceleracao;
-    private int sprint;
-    private int posicionamento;
-    private int finalizacao;
-    private int potencia;
-    private int chuteDeLonge;
-    private int chutesAcrobaticos;
-    private int penalti;
-    private int visao;
-    private int cruzamento;
-    private int cobrancaFalta;
-    private int passeCurto;
-    private int passeLongo;
-    private int efeito;
-    private int agilidade;
-    private int equilibrio;
-    private int reflexos;
-    private int controleDeBola;
-    private int drible;
-    private int compostura;
-    private int interceptacao;
-    private int cabeceamento;
-    private int marcacao;
-    private int carrinho;
-    private int corteEmPe;
-    private int salto;
-    private int resistencia;
-    private int forca;
-    private int agressividade;
-    private int mergulho;
-    private int jogoDeMaos;
-    private int pontape;
-    private int posicionamentoGoleiro;
-    private int reflexosGoleiro;
-    private int velocidade;
-    private String clube;
-    private String liga;
+    private String name;
+    private int height;
+    private int weight;
+    private String nation;
+    private String revision;
+    private int skills;
+    private Foot foot;
+    private int weakFoot;
+    private Role position;
+    private int acceleration;
+    private int sprintSpeed;
+    private int positioning;
+    private int finishing;
+    private int shotPower;
+    private int longShots;
+    private int volleys;
+    private int penalties;
+    private int vision;
+    private int crossing;
+    private int fkAccuracy;
+    private int shortPassing;
+    private int longPassing;
+    private int curve;
+    private int agility;
+    private int balance;
+    private int reactions;
+    private int ballControl;
+    private int dribbling;
+    private int composure;
+    private int interceptions;
+    private int headingAccuracy;
+    private int marking;
+    private int stadingTackle;
+    private int slidingTackle;
+    private int jumping;
+    private int stamina;
+    private int strength;
+    private int aggression;
+    private int diving;
+    private int handling;
+    private int kicking;
+    private int positionningGoalkeeper;
+    private int reflexesGoalkeeper;
+    private int speed;
+    private String club;
+    private String league;
     private Long idResource;
 
     public CardDetailsDTO(Map<String, String> fields) {
-        nome = parseString(fields.get(CrawlerUtil.NOME));
-        altura = parseHeight(fields.get(CrawlerUtil.ALTURA));
-        peso = parseInt(fields.get(CrawlerUtil.PESO));
-        nacionalidade = parseString(fields.get(CrawlerUtil.NACIONALIDADE));
-        versao = parseString(fields.get(CrawlerUtil.VERSAO));
-        finta = parseInt(fields.get(CrawlerUtil.FINTA));
-        pernaBoa = parsePerna(fields.get(CrawlerUtil.PERNA_BOA));
-        pernaRuim = parseInt(fields.get(CrawlerUtil.PERNA_RUIM));
-        posicao = parseFuncao(fields.get(CrawlerUtil.POSICAO));
-        clube = parseString(fields.get(CrawlerUtil.CLUBE));
-        liga = parseString(fields.get(CrawlerUtil.LIGA));
-        idResource = parseLong(fields.get(CrawlerUtil.ID_RESOURCE));
+        name = parseString(fields.get(CardUtil.NAME));
+        height = parseHeight(fields.get(CardUtil.HEIGHT));
+        weight = parseInt(fields.get(CardUtil.WEIGHT));
+        nation = parseString(fields.get(CardUtil.NATION));
+        revision = parseString(fields.get(CardUtil.REVISION));
+        skills = parseInt(fields.get(CardUtil.SKILLS));
+        foot = parsePerna(fields.get(CardUtil.FOOT));
+        weakFoot = parseInt(fields.get(CardUtil.WEAK_FOOT));
+        position = parseFuncao(fields.get(CardUtil.POSITION));
+        club = parseString(fields.get(CardUtil.CLUB));
+        league = parseString(fields.get(CardUtil.LEAGUE));
+        idResource = parseLong(fields.get(CardUtil.ID_RESOURCE));
 
-        if (posicao.equals(Role.GK)) {
-            mergulho = parseInt(fields.get(CrawlerUtil.MERGULHO));
-            jogoDeMaos = parseInt(fields.get(CrawlerUtil.JOGO_DE_MAOS));
-            pontape = parseInt(fields.get(CrawlerUtil.PONTAPE));
-            posicionamentoGoleiro = parseInt(fields.get(CrawlerUtil.POSICIONAMENTO_GOLEIRO));
-            reflexosGoleiro = parseInt(fields.get(CrawlerUtil.REFLEXOS_GOLEIRO));
-            velocidade = parseInt(fields.get(CrawlerUtil.VELOCIDADE));
+        if (position.equals(Role.GK)) {
+            diving = parseInt(fields.get(CardUtil.DIVING));
+            handling = parseInt(fields.get(CardUtil.HANDLING));
+            kicking = parseInt(fields.get(CardUtil.KICKING));
+            positionningGoalkeeper = parseInt(fields.get(CardUtil.POSITIONNING_GOALKEEPER));
+            reflexesGoalkeeper = parseInt(fields.get(CardUtil.REFLEXES_GOALKEEPER));
+            speed = parseInt(fields.get(CardUtil.SPEED));
         } else {
-            aceleracao = parseInt(fields.get(CrawlerUtil.ACELERACAO));
-            sprint = parseInt(fields.get(CrawlerUtil.SPRINT));
-            posicionamento = parseInt(fields.get(CrawlerUtil.POSICIONAMENTO));
-            finalizacao = parseInt(fields.get(CrawlerUtil.FINALIZACAO));
-            potencia = parseInt(fields.get(CrawlerUtil.POTENCIA));
-            chuteDeLonge = parseInt(fields.get(CrawlerUtil.CHUTE_DE_LONGE));
-            chutesAcrobaticos = parseInt(fields.get(CrawlerUtil.CHUTES_ACROBATICOS));
-            penalti = parseInt(fields.get(CrawlerUtil.PENALTI));
-            visao = parseInt(fields.get(CrawlerUtil.VISAO));
-            cruzamento = parseInt(fields.get(CrawlerUtil.CRUZAMENTO));
-            cobrancaFalta = parseInt(fields.get(CrawlerUtil.COBRANCA_FALTA));
-            passeCurto = parseInt(fields.get(CrawlerUtil.PASSE_CURTO));
-            passeLongo = parseInt(fields.get(CrawlerUtil.PASSE_LONGO));
-            efeito = parseInt(fields.get(CrawlerUtil.EFEITO));
-            agilidade = parseInt(fields.get(CrawlerUtil.AGILIDADE));
-            equilibrio = parseInt(fields.get(CrawlerUtil.EQUILIBRIO));
-            reflexos = parseInt(fields.get(CrawlerUtil.REFLEXOS));
-            controleDeBola = parseInt(fields.get(CrawlerUtil.CONTROLE_DE_BOLA));
-            drible = parseInt(fields.get(CrawlerUtil.DRIBLE));
-            compostura = parseInt(fields.get(CrawlerUtil.COMPOSTURA));
-            interceptacao = parseInt(fields.get(CrawlerUtil.INTERCEPTACAO));
-            cabeceamento = parseInt(fields.get(CrawlerUtil.CABECEAMENTO));
-            marcacao = parseInt(fields.get(CrawlerUtil.MARCACAO));
-            carrinho = parseInt(fields.get(CrawlerUtil.CARRINHO));
-            corteEmPe = parseInt(fields.get(CrawlerUtil.CORTE_EM_PE));
-            salto = parseInt(fields.get(CrawlerUtil.SALTO));
-            resistencia = parseInt(fields.get(CrawlerUtil.RESISTENCIA));
-            forca = parseInt(fields.get(CrawlerUtil.FORCA));
-            agressividade = parseInt(fields.get(CrawlerUtil.AGRESSIVIDADE));
+            acceleration = parseInt(fields.get(CardUtil.ACCELERATION));
+            sprintSpeed = parseInt(fields.get(CardUtil.SPRINT_SPEED));
+            positioning = parseInt(fields.get(CardUtil.POSITIONING));
+            finishing = parseInt(fields.get(CardUtil.FINISHING));
+            shotPower = parseInt(fields.get(CardUtil.SHOT_POWER));
+            longShots = parseInt(fields.get(CardUtil.LONG_SHOTS));
+            volleys = parseInt(fields.get(CardUtil.VOLLEYS));
+            penalties = parseInt(fields.get(CardUtil.PENALTIES));
+            vision = parseInt(fields.get(CardUtil.VISION));
+            crossing = parseInt(fields.get(CardUtil.CROSSING));
+            fkAccuracy = parseInt(fields.get(CardUtil.FK_ACCURACY));
+            shortPassing = parseInt(fields.get(CardUtil.SHORT_PASSING));
+            longPassing = parseInt(fields.get(CardUtil.LONG_PASSING));
+            curve = parseInt(fields.get(CardUtil.CURVE));
+            agility = parseInt(fields.get(CardUtil.AGILITY));
+            balance = parseInt(fields.get(CardUtil.BALANCE));
+            reactions = parseInt(fields.get(CardUtil.REACTIONS));
+            ballControl = parseInt(fields.get(CardUtil.BALL_CONTROL));
+            dribbling = parseInt(fields.get(CardUtil.DRIBBLING));
+            composure = parseInt(fields.get(CardUtil.COMPOSURE));
+            interceptions = parseInt(fields.get(CardUtil.INTERCEPTIONS));
+            headingAccuracy = parseInt(fields.get(CardUtil.HEADING_ACCURACY));
+            marking = parseInt(fields.get(CardUtil.MARKING));
+            stadingTackle = parseInt(fields.get(CardUtil.STADING_TACKLE));
+            slidingTackle = parseInt(fields.get(CardUtil.SLIDING_TACKLE));
+            jumping = parseInt(fields.get(CardUtil.JUMPING));
+            stamina = parseInt(fields.get(CardUtil.STAMINA));
+            strength = parseInt(fields.get(CardUtil.STRENGTH));
+            aggression = parseInt(fields.get(CardUtil.AGGRESSION));
         }
     }
 
     public Card parseFromCartao() {
-        Card card = new Card(this.nome,
-                criarBiografia(),
-                criarPosicao(),
-                criarClube());
+        Card card = new Card(null,
+                this.name,
+                createBiography(),
+                createPosition(),
+                createClub());
 
         card.getBiography().setIdResource(this.idResource);
 
         return card;
     }
 
-    private Biography criarBiografia() {
+    private Biography createBiography() {
         return new Biography(
-                this.altura,
-                this.peso,
-                this.nacionalidade,
-                this.versao,
-                this.finta,
-                this.pernaBoa,
-                this.pernaRuim);
+                this.height,
+                this.weight,
+                this.nation,
+                this.revision,
+                this.skills,
+                this.foot,
+                this.weakFoot);
     }
 
-    private Position criarPosicao() {
-        if (Role.GK.equals(this.posicao)) {
+    private Position createPosition() {
+        if (Role.GK.equals(this.position)) {
             return new Goalkeeper(
-                    this.mergulho,
-                    this.jogoDeMaos,
-                    this.pontape,
-                    this.posicionamentoGoleiro,
-                    this.reflexosGoleiro,
-                    this.velocidade
+                    this.diving,
+                    this.handling,
+                    this.kicking,
+                    this.positionningGoalkeeper,
+                    this.reflexesGoalkeeper,
+                    this.speed
             );
         } else {
             return new Player(
-                    this.posicao,
-                    criarAtributosVelocidade(),
-                    criarAtributosFinalizacao(),
-                    criarAtributosPasse(),
-                    criarAtributosDrible(),
-                    criarAtributosDefesa(),
-                    criarAtributosFisico()
+                    this.position,
+                    createPaceAttributes(),
+                    createShootingAttributes(),
+                    createPassingAttributes(),
+                    createDribblingAttributes(),
+                    createDefendingAttributes(),
+                    createPhysicalityAttributes()
             );
         }
     }
 
-    private Club criarClube() {
+    private Club createClub() {
         return new Club(
-                this.clube,
-                new League(this.liga)
+                this.club,
+                new League(this.league)
         );
     }
 
-    private Pace criarAtributosVelocidade() {
+    private Pace createPaceAttributes() {
         return new Pace(
-                this.aceleracao,
-                this.sprint
+                this.acceleration,
+                this.sprintSpeed
         );
     }
 
-    private Shooting criarAtributosFinalizacao() {
+    private Shooting createShootingAttributes() {
         return new Shooting(
-                this.posicionamento,
-                this.finalizacao,
-                this.potencia,
-                this.chuteDeLonge,
-                this.chutesAcrobaticos,
-                this.penalti
+                this.positioning,
+                this.finishing,
+                this.shotPower,
+                this.longShots,
+                this.volleys,
+                this.penalties
         );
     }
 
-    private Passing criarAtributosPasse() {
+    private Passing createPassingAttributes() {
         return new Passing(
-                this.visao,
-                this.cruzamento,
-                this.cobrancaFalta,
-                this.passeCurto,
-                this.passeLongo,
-                this.efeito
+                this.vision,
+                this.crossing,
+                this.fkAccuracy,
+                this.shortPassing,
+                this.longPassing,
+                this.curve
         );
     }
 
-    private Dribbling criarAtributosDrible() {
+    private Dribbling createDribblingAttributes() {
         return new Dribbling(
-                this.agilidade,
-                this.equilibrio,
-                this.reflexos,
-                this.controleDeBola,
-                this.drible,
-                this.compostura
+                this.agility,
+                this.balance,
+                this.reactions,
+                this.ballControl,
+                this.dribbling,
+                this.composure
         );
     }
 
-    private Defending criarAtributosDefesa() {
+    private Defending createDefendingAttributes() {
         return new Defending(
-                this.interceptacao,
-                this.cabeceamento,
-                this.marcacao,
-                this.carrinho,
-                this.corteEmPe
+                this.interceptions,
+                this.headingAccuracy,
+                this.marking,
+                this.stadingTackle,
+                this.slidingTackle
         );
     }
 
-    private Physicality criarAtributosFisico() {
+    private Physicality createPhysicalityAttributes() {
         return new Physicality(
-                this.salto,
-                this.resistencia,
-                this.forca,
-                this.agressividade
+                this.jumping,
+                this.stamina,
+                this.strength,
+                this.aggression
         );
     }
 
@@ -280,372 +281,372 @@ public class CardDetailsDTO {
         return value;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public int getAltura() {
-        return altura;
+    public int getHeight() {
+        return height;
     }
 
-    public void setAltura(int altura) {
-        this.altura = altura;
+    public void setHeight(int height) {
+        this.height = height;
     }
 
-    public int getPeso() {
-        return peso;
+    public int getWeight() {
+        return weight;
     }
 
-    public void setPeso(int peso) {
-        this.peso = peso;
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
 
-    public String getNacionalidade() {
-        return nacionalidade;
+    public String getNation() {
+        return nation;
     }
 
-    public void setNacionalidade(String nacionalidade) {
-        this.nacionalidade = nacionalidade;
+    public void setNation(String nation) {
+        this.nation = nation;
     }
 
-    public String getVersao() {
-        return versao;
+    public String getRevision() {
+        return revision;
     }
 
-    public void setVersao(String versao) {
-        this.versao = versao;
+    public void setRevision(String revision) {
+        this.revision = revision;
     }
 
-    public int getFinta() {
-        return finta;
+    public int getSkills() {
+        return skills;
     }
 
-    public void setFinta(int finta) {
-        this.finta = finta;
+    public void setSkills(int skills) {
+        this.skills = skills;
     }
 
-    public Foot getPernaBoa() {
-        return pernaBoa;
+    public Foot getFoot() {
+        return foot;
     }
 
-    public void setPernaBoa(Foot pernaBoa) {
-        this.pernaBoa = pernaBoa;
+    public void setFoot(Foot foot) {
+        this.foot = foot;
     }
 
-    public int getPernaRuim() {
-        return pernaRuim;
+    public int getWeakFoot() {
+        return weakFoot;
     }
 
-    public void setPernaRuim(int pernaRuim) {
-        this.pernaRuim = pernaRuim;
+    public void setWeakFoot(int weakFoot) {
+        this.weakFoot = weakFoot;
     }
 
-    public Role getPosicao() {
-        return posicao;
+    public Role getPosition() {
+        return position;
     }
 
-    public void setPosicao(Role posicao) {
-        this.posicao = posicao;
+    public void setPosition(Role position) {
+        this.position = position;
     }
 
-    public int getAceleracao() {
-        return aceleracao;
+    public int getAcceleration() {
+        return acceleration;
     }
 
-    public void setAceleracao(int aceleracao) {
-        this.aceleracao = aceleracao;
+    public void setAcceleration(int acceleration) {
+        this.acceleration = acceleration;
     }
 
-    public int getSprint() {
-        return sprint;
+    public int getSprintSpeed() {
+        return sprintSpeed;
     }
 
-    public void setSprint(int sprint) {
-        this.sprint = sprint;
+    public void setSprintSpeed(int sprintSpeed) {
+        this.sprintSpeed = sprintSpeed;
     }
 
-    public int getPosicionamento() {
-        return posicionamento;
+    public int getPositioning() {
+        return positioning;
     }
 
-    public void setPosicionamento(int posicionamento) {
-        this.posicionamento = posicionamento;
+    public void setPositioning(int positioning) {
+        this.positioning = positioning;
     }
 
-    public int getFinalizacao() {
-        return finalizacao;
+    public int getFinishing() {
+        return finishing;
     }
 
-    public void setFinalizacao(int finalizacao) {
-        this.finalizacao = finalizacao;
+    public void setFinishing(int finishing) {
+        this.finishing = finishing;
     }
 
-    public int getPotencia() {
-        return potencia;
+    public int getShotPower() {
+        return shotPower;
     }
 
-    public void setPotencia(int potencia) {
-        this.potencia = potencia;
+    public void setShotPower(int shotPower) {
+        this.shotPower = shotPower;
     }
 
-    public int getChuteDeLonge() {
-        return chuteDeLonge;
+    public int getLongShots() {
+        return longShots;
     }
 
-    public void setChuteDeLonge(int chuteDeLonge) {
-        this.chuteDeLonge = chuteDeLonge;
+    public void setLongShots(int longShots) {
+        this.longShots = longShots;
     }
 
-    public int getChutesAcrobaticos() {
-        return chutesAcrobaticos;
+    public int getVolleys() {
+        return volleys;
     }
 
-    public void setChutesAcrobaticos(int chutesAcrobaticos) {
-        this.chutesAcrobaticos = chutesAcrobaticos;
+    public void setVolleys(int volleys) {
+        this.volleys = volleys;
     }
 
-    public int getPenalti() {
-        return penalti;
+    public int getPenalties() {
+        return penalties;
     }
 
-    public void setPenalti(int penalti) {
-        this.penalti = penalti;
+    public void setPenalties(int penalties) {
+        this.penalties = penalties;
     }
 
-    public int getVisao() {
-        return visao;
+    public int getVision() {
+        return vision;
     }
 
-    public void setVisao(int visao) {
-        this.visao = visao;
+    public void setVision(int vision) {
+        this.vision = vision;
     }
 
-    public int getCruzamento() {
-        return cruzamento;
+    public int getCrossing() {
+        return crossing;
     }
 
-    public void setCruzamento(int cruzamento) {
-        this.cruzamento = cruzamento;
+    public void setCrossing(int crossing) {
+        this.crossing = crossing;
     }
 
-    public int getCobrancaFalta() {
-        return cobrancaFalta;
+    public int getFkAccuracy() {
+        return fkAccuracy;
     }
 
-    public void setCobrancaFalta(int cobrancaFalta) {
-        this.cobrancaFalta = cobrancaFalta;
+    public void setFkAccuracy(int fkAccuracy) {
+        this.fkAccuracy = fkAccuracy;
     }
 
-    public int getPasseCurto() {
-        return passeCurto;
+    public int getShortPassing() {
+        return shortPassing;
     }
 
-    public void setPasseCurto(int passeCurto) {
-        this.passeCurto = passeCurto;
+    public void setShortPassing(int shortPassing) {
+        this.shortPassing = shortPassing;
     }
 
-    public int getPasseLongo() {
-        return passeLongo;
+    public int getLongPassing() {
+        return longPassing;
     }
 
-    public void setPasseLongo(int passeLongo) {
-        this.passeLongo = passeLongo;
+    public void setLongPassing(int longPassing) {
+        this.longPassing = longPassing;
     }
 
-    public int getEfeito() {
-        return efeito;
+    public int getCurve() {
+        return curve;
     }
 
-    public void setEfeito(int efeito) {
-        this.efeito = efeito;
+    public void setCurve(int curve) {
+        this.curve = curve;
     }
 
-    public int getAgilidade() {
-        return agilidade;
+    public int getAgility() {
+        return agility;
     }
 
-    public void setAgilidade(int agilidade) {
-        this.agilidade = agilidade;
+    public void setAgility(int agility) {
+        this.agility = agility;
     }
 
-    public int getEquilibrio() {
-        return equilibrio;
+    public int getBalance() {
+        return balance;
     }
 
-    public void setEquilibrio(int equilibrio) {
-        this.equilibrio = equilibrio;
+    public void setBalance(int balance) {
+        this.balance = balance;
     }
 
-    public int getReflexos() {
-        return reflexos;
+    public int getReactions() {
+        return reactions;
     }
 
-    public void setReflexos(int reflexos) {
-        this.reflexos = reflexos;
+    public void setReactions(int reactions) {
+        this.reactions = reactions;
     }
 
-    public int getControleDeBola() {
-        return controleDeBola;
+    public int getBallControl() {
+        return ballControl;
     }
 
-    public void setControleDeBola(int controleDeBola) {
-        this.controleDeBola = controleDeBola;
+    public void setBallControl(int ballControl) {
+        this.ballControl = ballControl;
     }
 
-    public int getDrible() {
-        return drible;
+    public int getDribbling() {
+        return dribbling;
     }
 
-    public void setDrible(int drible) {
-        this.drible = drible;
+    public void setDribbling(int dribbling) {
+        this.dribbling = dribbling;
     }
 
-    public int getCompostura() {
-        return compostura;
+    public int getComposure() {
+        return composure;
     }
 
-    public void setCompostura(int compostura) {
-        this.compostura = compostura;
+    public void setComposure(int composure) {
+        this.composure = composure;
     }
 
-    public int getInterceptacao() {
-        return interceptacao;
+    public int getInterceptions() {
+        return interceptions;
     }
 
-    public void setInterceptacao(int interceptacao) {
-        this.interceptacao = interceptacao;
+    public void setInterceptions(int interceptions) {
+        this.interceptions = interceptions;
     }
 
-    public int getCabeceamento() {
-        return cabeceamento;
+    public int getHeadingAccuracy() {
+        return headingAccuracy;
     }
 
-    public void setCabeceamento(int cabeceamento) {
-        this.cabeceamento = cabeceamento;
+    public void setHeadingAccuracy(int headingAccuracy) {
+        this.headingAccuracy = headingAccuracy;
     }
 
-    public int getMarcacao() {
-        return marcacao;
+    public int getMarking() {
+        return marking;
     }
 
-    public void setMarcacao(int marcacao) {
-        this.marcacao = marcacao;
+    public void setMarking(int marking) {
+        this.marking = marking;
     }
 
-    public int getCarrinho() {
-        return carrinho;
+    public int getStadingTackle() {
+        return stadingTackle;
     }
 
-    public void setCarrinho(int carrinho) {
-        this.carrinho = carrinho;
+    public void setStadingTackle(int stadingTackle) {
+        this.stadingTackle = stadingTackle;
     }
 
-    public int getCorteEmPe() {
-        return corteEmPe;
+    public int getSlidingTackle() {
+        return slidingTackle;
     }
 
-    public void setCorteEmPe(int corteEmPe) {
-        this.corteEmPe = corteEmPe;
+    public void setSlidingTackle(int slidingTackle) {
+        this.slidingTackle = slidingTackle;
     }
 
-    public int getSalto() {
-        return salto;
+    public int getJumping() {
+        return jumping;
     }
 
-    public void setSalto(int salto) {
-        this.salto = salto;
+    public void setJumping(int jumping) {
+        this.jumping = jumping;
     }
 
-    public int getResistencia() {
-        return resistencia;
+    public int getStamina() {
+        return stamina;
     }
 
-    public void setResistencia(int resistencia) {
-        this.resistencia = resistencia;
+    public void setStamina(int stamina) {
+        this.stamina = stamina;
     }
 
-    public int getForca() {
-        return forca;
+    public int getStrength() {
+        return strength;
     }
 
-    public void setForca(int forca) {
-        this.forca = forca;
+    public void setStrength(int strength) {
+        this.strength = strength;
     }
 
-    public int getAgressividade() {
-        return agressividade;
+    public int getAggression() {
+        return aggression;
     }
 
-    public void setAgressividade(int agressividade) {
-        this.agressividade = agressividade;
+    public void setAggression(int aggression) {
+        this.aggression = aggression;
     }
 
-    public String getClube() {
-        return clube;
+    public String getClub() {
+        return club;
     }
 
-    public void setClube(String clube) {
-        this.clube = clube;
+    public void setClub(String club) {
+        this.club = club;
     }
 
-    public String getLiga() {
-        return liga;
+    public String getLeague() {
+        return league;
     }
 
-    public void setLiga(String liga) {
-        this.liga = liga;
+    public void setLeague(String league) {
+        this.league = league;
     }
 
-    public int getMergulho() {
-        return mergulho;
+    public int getDiving() {
+        return diving;
     }
 
-    public void setMergulho(int mergulho) {
-        this.mergulho = mergulho;
+    public void setDiving(int diving) {
+        this.diving = diving;
     }
 
-    public int getJogoDeMaos() {
-        return jogoDeMaos;
+    public int getHandling() {
+        return handling;
     }
 
-    public void setJogoDeMaos(int jogoDeMaos) {
-        this.jogoDeMaos = jogoDeMaos;
+    public void setHandling(int handling) {
+        this.handling = handling;
     }
 
-    public int getPontape() {
-        return pontape;
+    public int getKicking() {
+        return kicking;
     }
 
-    public void setPontape(int pontape) {
-        this.pontape = pontape;
+    public void setKicking(int kicking) {
+        this.kicking = kicking;
     }
 
-    public int getPosicionamentoGoleiro() {
-        return posicionamentoGoleiro;
+    public int getPositionningGoalkeeper() {
+        return positionningGoalkeeper;
     }
 
-    public void setPosicionamentoGoleiro(int posicionamentoGoleiro) {
-        this.posicionamentoGoleiro = posicionamentoGoleiro;
+    public void setPositionningGoalkeeper(int positionningGoalkeeper) {
+        this.positionningGoalkeeper = positionningGoalkeeper;
     }
 
-    public int getReflexosGoleiro() {
-        return reflexosGoleiro;
+    public int getReflexesGoalkeeper() {
+        return reflexesGoalkeeper;
     }
 
-    public void setReflexosGoleiro(int reflexosGoleiro) {
-        this.reflexosGoleiro = reflexosGoleiro;
+    public void setReflexesGoalkeeper(int reflexesGoalkeeper) {
+        this.reflexesGoalkeeper = reflexesGoalkeeper;
     }
 
-    public int getVelocidade() {
-        return velocidade;
+    public int getSpeed() {
+        return speed;
     }
 
-    public void setVelocidade(int velocidade) {
-        this.velocidade = velocidade;
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 
     public Long getIdResource() {

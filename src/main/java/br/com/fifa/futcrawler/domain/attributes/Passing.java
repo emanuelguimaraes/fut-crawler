@@ -1,15 +1,15 @@
 package br.com.fifa.futcrawler.domain.attributes;
 
-public class Passing {
+public class Passing<T> {
 
-    private int vision;
-    private int crossing;
-    private int fkAccuracy;
-    private int shortPassing;
-    private int longPassing;
-    private int curve;
+    private T vision;
+    private T crossing;
+    private T fkAccuracy;
+    private T shortPassing;
+    private T longPassing;
+    private T curve;
 
-    public Passing(int vision, int crossing, int fkAccuracy, int shortPassing, int longPassing, int curve) {
+    public Passing(T vision, T crossing, T fkAccuracy, T shortPassing, T longPassing, T curve) {
         this.vision = vision;
         this.crossing = crossing;
         this.fkAccuracy = fkAccuracy;
@@ -18,27 +18,27 @@ public class Passing {
         this.curve = curve;
     }
 
-    public int getVision() {
+    public T getVision() {
         return vision;
     }
 
-    public int getCrossing() {
+    public T getCrossing() {
         return crossing;
     }
 
-    public int getFkAccuracy() {
+    public T getFkAccuracy() {
         return fkAccuracy;
     }
 
-    public int getShortPassing() {
+    public T getShortPassing() {
         return shortPassing;
     }
 
-    public int getLongPassing() {
+    public T getLongPassing() {
         return longPassing;
     }
 
-    public int getCurve() {
+    public T getCurve() {
         return curve;
     }
 }

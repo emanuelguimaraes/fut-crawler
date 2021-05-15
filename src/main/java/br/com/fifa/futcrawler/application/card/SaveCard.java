@@ -6,7 +6,7 @@ import br.com.fifa.futcrawler.domain.card.CardRepository;
 
 public class SaveCard {
 
-    public final CardRepository repository;
+    private final CardRepository repository;
 
     public SaveCard(CardRepository repository) {
         this.repository = repository;

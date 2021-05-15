@@ -5,6 +5,7 @@ import br.com.fifa.futcrawler.application.crawler.dto.CardDetailsDTO;
 import br.com.fifa.futcrawler.application.crawler.dto.SimpleCardDTO;
 import br.com.fifa.futcrawler.application.crawler.exception.CrawlerException;
 import br.com.fifa.futcrawler.application.crawler.util.CrawlerUtil;
+import br.com.fifa.futcrawler.domain.card.util.CardUtil;
 import br.com.fifa.futcrawler.domain.position.Role;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -99,7 +100,7 @@ public class CrawlerJsoup implements Crawler {
             Map<String, String> fields = new HashMap<>(getBiographyInHtml(html));
             Map<String, String> attributes = new HashMap<>();
 
-            if (Role.GK.equals(Role.valueOf(fields.get(CrawlerUtil.POSICAO).trim().toUpperCase()))) {
+            if (Role.GK.equals(Role.valueOf(fields.get(CardUtil.POSITION).trim().toUpperCase()))) {
                 attributes.putAll(generateAttributesGoalkeeper());
             } else {
                 attributes.putAll(generateAttributesPlayerMap());
@@ -147,25 +148,25 @@ public class CrawlerJsoup implements Crawler {
         Elements elements = html.getElementById(BIOGRAPHY_ID_ELEMENT).getElementsByTag(BIOGRAPHY_TAG);
         int sizeElements = elements.size();
 
-        fields.put(CrawlerUtil.ID_RESOURCE, html.getElementsByAttribute(ID_RESOURCE_ATTRIBUTE)
+        fields.put(CardUtil.ID_RESOURCE, html.getElementsByAttribute(ID_RESOURCE_ATTRIBUTE)
                 .first().attributes().get(ID_RESOURCE_ATTRIBUTE));
-        fields.put(CrawlerUtil.NOME, getValueElement(html.getElementsByClass(NAME_CLASS),
+        fields.put(CardUtil.NAME, getValueElement(html.getElementsByClass(NAME_CLASS),
                 FIRST_ELEMENT, FIRST_ELEMENT));
-        fields.put(CrawlerUtil.POSICAO, getValueElement(html.getElementsByClass(POSITION_CLASS),
+        fields.put(CardUtil.POSITION, getValueElement(html.getElementsByClass(POSITION_CLASS),
                 FIRST_ELEMENT, FIRST_ELEMENT));
-        fields.put(CrawlerUtil.ALTURA, getValueElement(elements, getIndex(HEIGHT_INDEX, sizeElements), FIRST_ELEMENT));
-        fields.put(CrawlerUtil.PESO, getValueElement(elements, getIndex(WEIGHT_INDEX, sizeElements), FIRST_ELEMENT));
-        fields.put(CrawlerUtil.NACIONALIDADE, getValueElement(elements.get(getIndex(NATION_INDEX, sizeElements))
+        fields.put(CardUtil.HEIGHT, getValueElement(elements, getIndex(HEIGHT_INDEX, sizeElements), FIRST_ELEMENT));
+        fields.put(CardUtil.WEIGHT, getValueElement(elements, getIndex(WEIGHT_INDEX, sizeElements), FIRST_ELEMENT));
+        fields.put(CardUtil.NATION, getValueElement(elements.get(getIndex(NATION_INDEX, sizeElements))
                 .children(), SECOND_ELEMENT, FIRST_ELEMENT));
-        fields.put(CrawlerUtil.VERSAO, getValueElement(elements, getIndex(REVISION_INDEX, sizeElements), FIRST_ELEMENT));
-        fields.put(CrawlerUtil.FINTA, getValueElement(elements, getIndex(SKILLS_INDEX, sizeElements), FIRST_ELEMENT));
-        fields.put(CrawlerUtil.PERNA_BOA, getValueElement(elements,
+        fields.put(CardUtil.REVISION, getValueElement(elements, getIndex(REVISION_INDEX, sizeElements), FIRST_ELEMENT));
+        fields.put(CardUtil.SKILLS, getValueElement(elements, getIndex(SKILLS_INDEX, sizeElements), FIRST_ELEMENT));
+        fields.put(CardUtil.FOOT, getValueElement(elements,
                 getIndex(FOOT_INDEX, sizeElements), FIRST_ELEMENT));
-        fields.put(CrawlerUtil.PERNA_RUIM, getValueElement(elements,
+        fields.put(CardUtil.WEAK_FOOT, getValueElement(elements,
                 getIndex(WEAK_FOOT_INDEX, sizeElements), FIRST_ELEMENT));
-        fields.put(CrawlerUtil.CLUBE, getValueElement(elements.get(getIndex(CLUB_INDEX, sizeElements)).children(),
+        fields.put(CardUtil.CLUB, getValueElement(elements.get(getIndex(CLUB_INDEX, sizeElements)).children(),
                 SECOND_ELEMENT, FIRST_ELEMENT));
-        fields.put(CrawlerUtil.LIGA, getValueElement(elements.get(getIndex(LEAGUE_INDEX, sizeElements)).children(),
+        fields.put(CardUtil.LEAGUE, getValueElement(elements.get(getIndex(LEAGUE_INDEX, sizeElements)).children(),
                 SECOND_ELEMENT, FIRST_ELEMENT));
 
         return fields;

@@ -1,32 +1,32 @@
 package br.com.fifa.futcrawler.domain.attributes;
 
-public class Physicality {
+public class Physicality<T> {
 
-    private int jumping;
-    private int stamina;
-    private int strength;
-    private int aggression;
+    private T jumping;
+    private T stamina;
+    private T strength;
+    private T aggression;
 
-    public Physicality(int jumping, int stamina, int strength, int aggression) {
+    public Physicality(T jumping, T stamina, T strength, T aggression) {
         this.jumping = jumping;
         this.stamina = stamina;
         this.strength = strength;
         this.aggression = aggression;
     }
 
-    public int getJumping() {
+    public T getJumping() {
         return jumping;
     }
 
-    public int getStamina() {
+    public T getStamina() {
         return stamina;
     }
 
-    public int getStrength() {
+    public T getStrength() {
         return strength;
     }
 
-    public int getAggression() {
+    public T getAggression() {
         return aggression;
     }
 }

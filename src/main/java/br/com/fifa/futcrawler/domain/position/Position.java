@@ -1,7 +1,8 @@
 package br.com.fifa.futcrawler.domain.position;
 
+import br.com.fifa.futcrawler.domain.attributes.weight.AttributesWeight;
+
 import java.math.BigDecimal;
-import java.util.Map;
 
 public abstract class Position {
 
@@ -15,10 +16,10 @@ public abstract class Position {
         return name;
     }
 
-    public abstract BigDecimal getOverralByAttributes(Map<String, Integer> attributesLevel);
+    public abstract BigDecimal getOverralByAttributes(AttributesWeight weight);
 
-    protected BigDecimal multiplyAttribute(int attribute, Integer level) {
+    protected BigDecimal multiplyAttribute(Integer attribute, BigDecimal level) {
         return new BigDecimal(attribute)
-                .multiply(new BigDecimal(level));
+                .multiply(level);
     }
 }

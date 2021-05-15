@@ -1,16 +1,16 @@
 package br.com.fifa.futcrawler.domain.attributes;
 
-public class Shooting {
+public class Shooting<T> {
 
-    private int positioning;
-    private int finishing;
-    private int shotPower;
-    private int longShots;
-    private int volleys;
-    private int penalties;
+    private T positioning;
+    private T finishing;
+    private T shotPower;
+    private T longShots;
+    private T volleys;
+    private T penalties;
 
-    public Shooting(int positioning, int finishing, int shotPower, int longShots, int volleys,
-                    int penalties) {
+    public Shooting(T positioning, T finishing, T shotPower, T longShots, T volleys,
+                    T penalties) {
         this.positioning = positioning;
         this.finishing = finishing;
         this.shotPower = shotPower;
@@ -19,27 +19,27 @@ public class Shooting {
         this.penalties = penalties;
     }
 
-    public int getPositioning() {
+    public T getPositioning() {
         return positioning;
     }
 
-    public int getFinishing() {
+    public T getFinishing() {
         return finishing;
     }
 
-    public int getShotPower() {
+    public T getShotPower() {
         return shotPower;
     }
 
-    public int getLongShots() {
+    public T getLongShots() {
         return longShots;
     }
 
-    public int getVolleys() {
+    public T getVolleys() {
         return volleys;
     }
 
-    public int getPenalties() {
+    public T getPenalties() {
         return penalties;
     }
 }

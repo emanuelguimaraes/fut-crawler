@@ -152,11 +152,11 @@ public class AttributesWeightEntity {
     private BigDecimal kicking = BigDecimal.ZERO;
 
     @Column(name = "POSICIONAMENTO_GOLEIRO", nullable = false)
-    @Size(min = 0, max = 1, message = "Valor inválido para o atributo de Posicionamento")
+    @Size(min = 0, max = 1, message = "Valor inválido para o atributo de Posicionamento do Goleiro")
     private BigDecimal positionningGoalkeeper = BigDecimal.ZERO;
 
     @Column(name = "REFLEXOS_GOLEIRO", nullable = false)
-    @Size(min = 0, max = 1, message = "Valor inválido para o atributo de Reflexos")
+    @Size(min = 0, max = 1, message = "Valor inválido para o atributo de Reflexos do Goleiro")
     private BigDecimal reflexesGoalkeeper = BigDecimal.ZERO;
 
     @Column(name = "VELOCIDADE", nullable = false)

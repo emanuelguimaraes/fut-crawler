@@ -6,22 +6,16 @@ import br.com.fifa.futcrawler.domain.position.Position;
 
 public class Card {
 
-    private Long id;
     private String name;
     private Biography biography;
     private Position position;
     private Club club;
 
-    public Card(Long id, String name, Biography biography, Position position, Club club) {
-        this.id = id;
+    public Card(String name, Biography biography, Position position, Club club) {
         this.name = name;
         this.biography = biography;
         this.position = position;
         this.club = club;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getName() {

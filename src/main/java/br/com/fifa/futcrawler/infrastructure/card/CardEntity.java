@@ -70,7 +70,6 @@ public class CardEntity {
     public CardEntity() { }
 
     public CardEntity(Card card) {
-        this.id = card.getId();
         this.name = card.getName();
         this.height = card.getBiography().getHeight();
         this.weight = card.getBiography().getWeight();

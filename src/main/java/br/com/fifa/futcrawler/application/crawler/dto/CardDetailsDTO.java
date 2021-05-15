@@ -119,8 +119,7 @@ public class CardDetailsDTO {
     }
 
     public Card parseFromCartao() {
-        Card card = new Card(null,
-                this.name,
+        Card card = new Card(this.name,
                 createBiography(),
                 createPosition(),
                 createClub());

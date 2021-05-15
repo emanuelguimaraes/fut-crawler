@@ -1,4 +1,4 @@
-package br.com.fifa.futcrawler.application.attributes.request;
+package br.com.fifa.futcrawler.application.attributes.weight.request;
 
 import br.com.fifa.futcrawler.domain.attributes.*;
 import br.com.fifa.futcrawler.domain.attributes.weight.AttributesWeight;
@@ -43,7 +43,7 @@ public class AttributesWeightRequest {
     private BigDecimal diving;
     private BigDecimal handling;
     private BigDecimal kicking;
-    private BigDecimal positionningGoalkeeper;
+    private BigDecimal positioningGoalkeeper;
     private BigDecimal reflexesGoalkeeper;
     private BigDecimal speed;
 
@@ -54,7 +54,7 @@ public class AttributesWeightRequest {
                     this.diving,
                     this.handling,
                     this.kicking,
-                    this.positionningGoalkeeper,
+                    this.positioningGoalkeeper,
                     this.reflexesGoalkeeper,
                     this.speed
             );
@@ -262,8 +262,8 @@ public class AttributesWeightRequest {
         return kicking;
     }
 
-    public BigDecimal getPositionningGoalkeeper() {
-        return positionningGoalkeeper;
+    public BigDecimal getPositioningGoalkeeper() {
+        return positioningGoalkeeper;
     }
 
     public BigDecimal getReflexesGoalkeeper() {

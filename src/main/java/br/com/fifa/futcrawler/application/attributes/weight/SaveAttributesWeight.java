@@ -1,7 +1,7 @@
-package br.com.fifa.futcrawler.application.attributes;
+package br.com.fifa.futcrawler.application.attributes.weight;
 
-import br.com.fifa.futcrawler.application.attributes.request.AttributesWeightRequest;
-import br.com.fifa.futcrawler.application.attributes.response.AttributesWeightResponse;
+import br.com.fifa.futcrawler.application.attributes.weight.request.AttributesWeightRequest;
+import br.com.fifa.futcrawler.application.attributes.weight.response.AttributesWeightResponse;
 import br.com.fifa.futcrawler.domain.attributes.weight.AttributesWeight;
 import br.com.fifa.futcrawler.domain.attributes.weight.AttributesWeightRepository;
 
@@ -16,6 +16,7 @@ public class SaveAttributesWeight {
     public AttributesWeightResponse execute(AttributesWeightRequest request) {
         AttributesWeight attributesWeight = request.parseFromAttributesWeight();
         repository.save(attributesWeight);
+
         return new AttributesWeightResponse(String.format(
                         "Os pesos dos atributos para posição %s foram carregados com sucesso.",
                         request.getPosition().toString()));

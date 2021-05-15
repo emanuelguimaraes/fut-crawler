@@ -1,4 +1,4 @@
-package br.com.fifa.futcrawler.application.attributes.response;
+package br.com.fifa.futcrawler.application.attributes.weight.response;
 
 public class AttributesWeightResponse {
 

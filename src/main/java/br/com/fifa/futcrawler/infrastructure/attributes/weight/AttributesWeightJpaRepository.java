@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AttributesWeightJpaJpaRepository extends JpaRepository<AttributesWeightEntity, Long> {
+public interface AttributesWeightJpaRepository extends JpaRepository<AttributesWeightEntity, Long> {
 
 }

@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class AttributesWeightRepositoryImpl implements AttributesWeightRepository {
 
-    private final AttributesWeightJpaJpaRepository repository;
+    private final AttributesWeightJpaRepository repository;
 
     @Autowired
-    public AttributesWeightRepositoryImpl(AttributesWeightJpaJpaRepository repository) {
+    public AttributesWeightRepositoryImpl(AttributesWeightJpaRepository repository) {
         this.repository = repository;
     }
 

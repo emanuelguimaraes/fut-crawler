@@ -2,7 +2,7 @@ package br.com.fifa.futcrawler.infrastructure.attributes;
 
 import br.com.fifa.futcrawler.application.attributes.chemistry.SaveChemistry;
 import br.com.fifa.futcrawler.application.attributes.chemistry.request.ChemistryRequest;
-import br.com.fifa.futcrawler.application.attributes.chemistry.response.ChemistryResponse;
+import br.com.fifa.futcrawler.application.attributes.chemistry.response.ChemistryMessageResponse;
 import br.com.fifa.futcrawler.application.attributes.weight.SaveAttributesWeight;
 import br.com.fifa.futcrawler.application.attributes.weight.request.AttributesWeightRequest;
 import br.com.fifa.futcrawler.application.attributes.weight.response.AttributesWeightResponse;
@@ -36,7 +36,7 @@ public class AttributesController {
     }
 
     @PostMapping("/chemistry")
-    public ResponseEntity<ChemistryResponse> saveChemistry(@RequestBody ChemistryRequest request) {
+    public ResponseEntity<ChemistryMessageResponse> saveChemistry(@RequestBody ChemistryRequest request) {
         return ResponseEntity.ok(saveChemistryService.execute(request));
     }
 }

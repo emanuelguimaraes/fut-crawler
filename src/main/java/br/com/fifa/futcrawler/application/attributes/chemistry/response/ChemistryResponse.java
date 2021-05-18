@@ -1,14 +1,22 @@
 package br.com.fifa.futcrawler.application.attributes.chemistry.response;
 
+import br.com.fifa.futcrawler.domain.attributes.chemistry.ChemistryType;
+
 public class ChemistryResponse {
 
-    private String message;
+    private Long id;
+    private ChemistryType chemistry;
 
-    public ChemistryResponse(String message) {
-        this.message = message;
+    public ChemistryResponse(Long id, ChemistryType chemistry) {
+        this.id = id;
+        this.chemistry = chemistry;
     }
 
-    public String getMessage() {
-        return message;
+    public Long getId() {
+        return id;
+    }
+
+    public ChemistryType getChemistry() {
+        return chemistry;
     }
 }

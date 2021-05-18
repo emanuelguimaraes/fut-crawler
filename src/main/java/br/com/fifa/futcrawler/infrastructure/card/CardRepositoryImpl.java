@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Service
 public class CardRepositoryImpl implements CardRepository {
 
-    private static final int TOTAL_ITENS_PER_PAGE = 10;
+    private static final int TOTAL_ITENS_PER_PAGE = 100;
 
     private final CardJpaRepository repository;
 

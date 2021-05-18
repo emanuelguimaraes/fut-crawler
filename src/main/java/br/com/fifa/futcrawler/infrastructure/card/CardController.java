@@ -6,6 +6,7 @@ import br.com.fifa.futcrawler.application.crawler.SaveCardsByCrawler;
 import br.com.fifa.futcrawler.application.crawler.request.CrawlerRequest;
 import br.com.fifa.futcrawler.application.crawler.response.CrawlerResponse;
 import br.com.fifa.futcrawler.domain.position.Role;
+import br.com.fifa.futcrawler.infrastructure.attributes.chemistry.ChemistryRepositoryImpl;
 import br.com.fifa.futcrawler.infrastructure.crawler.CrawlerJsoup;
 import br.com.fifa.futcrawler.infrastructure.price.FutExternalApiImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -23,9 +25,10 @@ public class CardController {
     private final LargestOverallsByPosition overallsByPositionService;
 
     @Autowired
-    public CardController(CardRepositoryImpl repository, CrawlerJsoup crawlerJsoup, FutExternalApiImpl futApi) {
+    public CardController(CardRepositoryImpl repository, ChemistryRepositoryImpl chemistryRepository,
+                          CrawlerJsoup crawlerJsoup, FutExternalApiImpl futApi) {
         this.crawlerService = new SaveCardsByCrawler(repository, crawlerJsoup);
-        this.overallsByPositionService = new LargestOverallsByPosition(repository, futApi);
+        this.overallsByPositionService = new LargestOverallsByPosition(repository, futApi, chemistryRepository);
     }
 
     @PostMapping("/crawler")
@@ -35,7 +38,8 @@ public class CardController {
 
     @GetMapping("/overalls")
     public ResponseEntity<List<CardResponse>> getLargestOverallsByPosition(
-            @RequestParam Role position, @RequestParam String console, @RequestParam int page) {
-        return ResponseEntity.ok(overallsByPositionService.execute(position, console, page));
+            @RequestParam Role position, @RequestParam String console,
+            @RequestParam int page, @RequestParam BigDecimal price) {
+        return ResponseEntity.ok(overallsByPositionService.execute(position, console, page, price));
     }
 }

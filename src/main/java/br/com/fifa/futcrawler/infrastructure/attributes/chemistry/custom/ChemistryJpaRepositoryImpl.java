@@ -1,6 +1,5 @@
-package br.com.fifa.futcrawler.infrastructure.card.custom;
+package br.com.fifa.futcrawler.infrastructure.attributes.chemistry.custom;
 
-import br.com.fifa.futcrawler.domain.card.dto.CardDTO;
 import br.com.fifa.futcrawler.domain.position.Role;
 import br.com.fifa.futcrawler.infrastructure.attributes.AttributesPlayerEntity;
 import br.com.fifa.futcrawler.infrastructure.attributes.AttributesPlayerEntity_;
@@ -10,7 +9,6 @@ import br.com.fifa.futcrawler.infrastructure.attributes.weight.AttributesWeightE
 import br.com.fifa.futcrawler.infrastructure.attributes.weight.AttributesWeightEntity_;
 import br.com.fifa.futcrawler.infrastructure.card.CardEntity;
 import br.com.fifa.futcrawler.infrastructure.card.CardEntity_;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -21,58 +19,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class CardJpaRepositoryImpl implements CardJpaCustomRepository {
+public class ChemistryJpaRepositoryImpl implements ChemistryJpaCustomRepository {
 
-    private static final int NUMBER_ONE = 1;
     private static final Integer MAX_VALUE_ATTRIBUTE = Integer.valueOf(99);
     private static final String LEAST_SQL_FUNCTION = "LEAST";
+    private static final int FIRST_ITEM = 1;
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
-    public List<CardDTO> findAllByAttributesType(Role position, Pageable pageable) {
+    public ChemistryEntity findBestChemistryByCard(Long idCard, Role position) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery query = builder.createQuery();
+        CriteriaQuery<ChemistryEntity> query = builder.createQuery(ChemistryEntity.class);
 
+        Root<ChemistryEntity> rootChemistry = query.from(ChemistryEntity.class);
         Root<CardEntity> rootCard = query.from(CardEntity.class);
         Root<AttributesPlayerEntity> rootAttributes = query.from(AttributesPlayerEntity.class);
         Root<AttributesWeightEntity> rootWeight = query.from(AttributesWeightEntity.class);
-        Root<ChemistryEntity> rootChemistry = query.from(ChemistryEntity.class);
         List<Predicate> predicates = new ArrayList<>();
 
         predicates.add(builder.equal(rootCard.get(CardEntity_.id),
                 rootAttributes.get(AttributesPlayerEntity_.card).get(CardEntity_.id)));
+        predicates.add(builder.equal(rootCard.get(CardEntity_.id), idCard));
         predicates.add(builder.equal(rootWeight.get(AttributesWeightEntity_.position), position));
 
         Expression<BigDecimal> overall = generateOverall(builder, rootAttributes, rootWeight, rootChemistry);
 
-        query.select(builder.construct(
-                CardDTO.class,
-                rootCard.get(CardEntity_.id),
-                rootCard.get(CardEntity_.name),
-                rootCard.get(CardEntity_.club),
-                rootCard.get(CardEntity_.league),
-                rootCard.get(CardEntity_.nation),
-                rootCard.get(CardEntity_.position),
-                rootCard.get(CardEntity_.revision),
-                builder.max(overall)))
-        .where(predicates.toArray(new Predicate[predicates.size()]))
-        .groupBy(
-                rootCard.get(CardEntity_.id),
-                rootCard.get(CardEntity_.name),
-                rootCard.get(CardEntity_.club),
-                rootCard.get(CardEntity_.league),
-                rootCard.get(CardEntity_.nation),
-                rootCard.get(CardEntity_.position),
-                rootCard.get(CardEntity_.revision))
-        .orderBy(builder.desc(builder.max(overall)));
+        query.select(rootChemistry)
+                .where(predicates.toArray(new Predicate[predicates.size()]))
+                .orderBy(builder.desc(overall));
 
         return entityManager
                 .createQuery(query)
-                .setFirstResult(getFromIndex(pageable.getPageNumber(), pageable.getPageSize()))
-                .setMaxResults(pageable.getPageSize())
-                .getResultList();
+                .setMaxResults(FIRST_ITEM)
+                .getSingleResult();
     }
 
     private Expression<BigDecimal> generateOverall(CriteriaBuilder builder,
@@ -349,9 +330,5 @@ public class CardJpaRepositoryImpl implements CardJpaCustomRepository {
         }
 
         return sum;
-    }
-
-    private int getFromIndex(int page, int size) {
-        return (page - NUMBER_ONE) * size;
     }
 }

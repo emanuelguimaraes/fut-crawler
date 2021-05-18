@@ -10,16 +10,18 @@ public class CardDTO {
     private String name;
     private String club;
     private String league;
+    private String nation;
     private Role position;
     private String revision;
     private BigDecimal overall;
 
-    public CardDTO(Long id, String name, String club, String league, Role position,
-                   String revision, BigDecimal overall) {
+    public CardDTO(Long id, String name, String club, String league, String nation,
+                   Role position, String revision, BigDecimal overall) {
         this.id = id;
         this.name = name;
         this.club = club;
         this.league = league;
+        this.nation = nation;
         this.position = position;
         this.revision = revision;
         this.overall = overall;
@@ -39,6 +41,10 @@ public class CardDTO {
 
     public String getLeague() {
         return league;
+    }
+
+    public String getNation() {
+        return nation;
     }
 
     public Role getPosition() {

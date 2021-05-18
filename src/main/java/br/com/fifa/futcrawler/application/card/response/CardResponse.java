@@ -1,5 +1,6 @@
 package br.com.fifa.futcrawler.application.card.response;
 
+import br.com.fifa.futcrawler.domain.attributes.chemistry.ChemistryType;
 import br.com.fifa.futcrawler.domain.position.Role;
 
 import java.math.BigDecimal;
@@ -15,18 +16,21 @@ public class CardResponse {
     private String name;
     private String club;
     private String league;
+    private String nation;
     private Role position;
     private String revision;
     private String overall;
-    private String price;
+    private ChemistryType chemistry;
+    private BigDecimal price;
 
-    public CardResponse(Long id, String name, String club, String league, Role position,
-                        String revision, BigDecimal overall) {
+    public CardResponse(Long id, String name, String club, String league, String nation,
+                        Role position, String revision, BigDecimal overall) {
         setFormat();
         this.id = id;
         this.name = name;
         this.club = club;
         this.league = league;
+        this.nation = nation;
         this.position = position;
         this.revision = revision;
         this.overall = this.decimalFormat.format(overall);
@@ -48,6 +52,10 @@ public class CardResponse {
         return league;
     }
 
+    public String getNation() {
+        return nation;
+    }
+
     public Role getPosition() {
         return position;
     }
@@ -60,12 +68,24 @@ public class CardResponse {
         return overall;
     }
 
+    public ChemistryType getChemistry() {
+        return chemistry;
+    }
+
+    public void addChemistry(ChemistryType chemistry) {
+        this.chemistry = chemistry;
+    }
+
     public String getPrice() {
-        return price;
+        return this.decimalFormat.format(price);
+    }
+
+    public BigDecimal getPriceNumber() {
+        return this.price;
     }
 
     public void addPrice(BigDecimal price) {
-        this.price = this.decimalFormat.format(price);
+        this.price = price;
     }
 
     private void setFormat() {

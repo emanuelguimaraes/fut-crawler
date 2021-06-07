@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface CardJpaCustomRepository {
 
-    List<CardDTO> findAllByAttributesType(Role position, Pageable pageable);
+    List<CardDTO> findAllByAttributesType(Role position, Long idCard, String nation, String league, Pageable pageable);
 }

@@ -1,7 +1,7 @@
 package br.com.fifa.futcrawler.domain.card;
 
+import br.com.fifa.futcrawler.application.card.request.OverallsRequest;
 import br.com.fifa.futcrawler.domain.card.dto.CardDTO;
-import br.com.fifa.futcrawler.domain.position.Role;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,7 +10,7 @@ public interface CardRepository {
 
     Optional<Card> findById(Long id);
 
-    List<CardDTO> findAllByAttributesType(String type, Role position, int page);
+    List<CardDTO> findAllByAttributesType(OverallsRequest request);
 
     void save(Card card);
 

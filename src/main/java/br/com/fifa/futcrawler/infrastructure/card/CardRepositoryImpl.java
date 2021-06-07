@@ -1,5 +1,6 @@
 package br.com.fifa.futcrawler.infrastructure.card;
 
+import br.com.fifa.futcrawler.application.card.request.OverallsRequest;
 import br.com.fifa.futcrawler.domain.card.Card;
 import br.com.fifa.futcrawler.domain.card.CardRepository;
 import br.com.fifa.futcrawler.domain.card.dto.CardDTO;
@@ -36,8 +37,9 @@ public class CardRepositoryImpl implements CardRepository {
     }
 
     @Override
-    public List<CardDTO> findAllByAttributesType(String type, Role position, int page) {
-        return repository.findAllByAttributesType(position, PageRequest.of(page, TOTAL_ITENS_PER_PAGE));
+    public List<CardDTO> findAllByAttributesType(OverallsRequest request) {
+        return repository.findAllByAttributesType(request.getPosition(), request.getIdCard(), request.getNation(),
+                request.getLeague(), PageRequest.of(request.getPage(), TOTAL_ITENS_PER_PAGE));
     }
 
     @Override

@@ -1,11 +1,11 @@
 package br.com.fifa.futcrawler.infrastructure.card;
 
 import br.com.fifa.futcrawler.application.card.LargestOverallsByPosition;
+import br.com.fifa.futcrawler.application.card.request.OverallsRequest;
 import br.com.fifa.futcrawler.application.card.response.CardResponse;
 import br.com.fifa.futcrawler.application.crawler.SaveCardsByCrawler;
 import br.com.fifa.futcrawler.application.crawler.request.CrawlerRequest;
 import br.com.fifa.futcrawler.application.crawler.response.CrawlerResponse;
-import br.com.fifa.futcrawler.domain.position.Role;
 import br.com.fifa.futcrawler.infrastructure.attributes.chemistry.ChemistryRepositoryImpl;
 import br.com.fifa.futcrawler.infrastructure.crawler.CrawlerJsoup;
 import br.com.fifa.futcrawler.infrastructure.price.FutExternalApiImpl;
@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -37,9 +36,7 @@ public class CardController {
     }
 
     @GetMapping("/overalls")
-    public ResponseEntity<List<CardResponse>> getLargestOverallsByPosition(
-            @RequestParam Role position, @RequestParam String console,
-            @RequestParam int page, @RequestParam BigDecimal price) {
-        return ResponseEntity.ok(overallsByPositionService.execute(position, console, page, price));
+    public ResponseEntity<List<CardResponse>> getLargestOverallsByPosition(OverallsRequest request) {
+        return ResponseEntity.ok(overallsByPositionService.execute(request));
     }
 }

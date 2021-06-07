@@ -1,6 +1,7 @@
 package br.com.fifa.futcrawler.application.card;
 
 import br.com.fifa.futcrawler.application.attributes.chemistry.BestChemistryByCard;
+import br.com.fifa.futcrawler.application.card.request.OverallsRequest;
 import br.com.fifa.futcrawler.application.card.response.CardResponse;
 import br.com.fifa.futcrawler.application.price.FutExternalApi;
 import br.com.fifa.futcrawler.application.price.GetCardPrice;
@@ -26,9 +27,9 @@ public class LargestOverallsByPosition {
         this.chemistryService = new BestChemistryByCard(chemistryRepository);
     }
 
-    public List<CardResponse> execute(Role position, String console, int page, BigDecimal price) {
+    public List<CardResponse> execute(OverallsRequest request) {
         List<CardResponse> cardsResponse = repository
-                .findAllByAttributesType(CardUtil.getAttributesType(position), position, page)
+                .findAllByAttributesType(request)
                 .stream()
                 .map(card -> new CardResponse(
                         card.getId(),
@@ -43,16 +44,16 @@ public class LargestOverallsByPosition {
                 .collect(Collectors.toList());
 
         for (CardResponse card : cardsResponse) {
-            card.addChemistry(chemistryService.execute(card.getId(), position).getName());
-            card.addPrice(priceService.execute(card.getId(), console));
+            card.addChemistry(chemistryService.execute(card.getId(), request.getPosition()).getName());
+            card.addPrice(priceService.execute(card.getId(), request.getConsole()));
         }
 
         return cardsResponse
                 .stream()
                 .filter(card -> {
-                    if (price == null) {
+                    if (request.getPrice() == null) {
                         return true;
-                    } else if ((card.getPriceNumber().compareTo(price) <= 0)
+                    } else if ((card.getPriceNumber().compareTo(request.getPrice()) <= 0)
                             && (card.getPriceNumber().compareTo(BigDecimal.ZERO) > 0)) {
                         return true;
                     } else {

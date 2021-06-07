@@ -31,7 +31,7 @@ public class CardJpaRepositoryImpl implements CardJpaCustomRepository {
     private EntityManager entityManager;
 
     @Override
-    public List<CardDTO> findAllByAttributesType(Role position, Pageable pageable) {
+    public List<CardDTO> findAllByAttributesType(Role position, Long idCard, String nation, String league, Pageable pageable) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery query = builder.createQuery();
 
@@ -44,6 +44,18 @@ public class CardJpaRepositoryImpl implements CardJpaCustomRepository {
         predicates.add(builder.equal(rootCard.get(CardEntity_.id),
                 rootAttributes.get(AttributesPlayerEntity_.card).get(CardEntity_.id)));
         predicates.add(builder.equal(rootWeight.get(AttributesWeightEntity_.position), position));
+
+        if (idCard != null) {
+            predicates.add(builder.equal(rootCard.get(CardEntity_.id), idCard));
+        }
+
+        if (nation != null) {
+            predicates.add(builder.equal(rootCard.get(CardEntity_.nation), nation));
+        }
+
+        if (league != null) {
+            predicates.add(builder.equal(rootCard.get(CardEntity_.league), league));
+        }
 
         Expression<BigDecimal> overall = generateOverall(builder, rootAttributes, rootWeight, rootChemistry);
 

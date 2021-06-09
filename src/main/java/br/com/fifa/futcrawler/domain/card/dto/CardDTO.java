@@ -14,9 +14,10 @@ public class CardDTO {
     private Role position;
     private String revision;
     private BigDecimal overall;
+    private BigDecimal price;
 
     public CardDTO(Long id, String name, String club, String league, String nation,
-                   Role position, String revision, BigDecimal overall) {
+                   Role position, String revision, BigDecimal overall, BigDecimal price) {
         this.id = id;
         this.name = name;
         this.club = club;
@@ -25,6 +26,7 @@ public class CardDTO {
         this.position = position;
         this.revision = revision;
         this.overall = overall;
+        this.price = price;
     }
 
     public Long getId() {
@@ -57,5 +59,9 @@ public class CardDTO {
 
     public BigDecimal getOverall() {
         return overall;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
     }
 }

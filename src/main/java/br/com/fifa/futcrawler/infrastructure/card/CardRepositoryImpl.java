@@ -4,7 +4,7 @@ import br.com.fifa.futcrawler.application.card.request.OverallsRequest;
 import br.com.fifa.futcrawler.domain.card.Card;
 import br.com.fifa.futcrawler.domain.card.CardRepository;
 import br.com.fifa.futcrawler.domain.card.dto.CardDTO;
-import br.com.fifa.futcrawler.domain.position.Role;
+import br.com.fifa.futcrawler.domain.price.Price;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Service
 public class CardRepositoryImpl implements CardRepository {
 
-    private static final int TOTAL_ITENS_PER_PAGE = 100;
+    private static final int TOTAL_ITENS_PER_PAGE = 10;
 
     private final CardJpaRepository repository;
 
@@ -39,7 +39,7 @@ public class CardRepositoryImpl implements CardRepository {
     @Override
     public List<CardDTO> findAllByAttributesType(OverallsRequest request) {
         return repository.findAllByAttributesType(request.getPosition(), request.getIdCard(), request.getNation(),
-                request.getLeague(), PageRequest.of(request.getPage(), TOTAL_ITENS_PER_PAGE));
+                request.getLeague(), request.getPrice(), PageRequest.of(request.getPage(), TOTAL_ITENS_PER_PAGE));
     }
 
     @Override
@@ -67,5 +67,27 @@ public class CardRepositoryImpl implements CardRepository {
                 .stream()
                 .map(CardFacade::create)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Long> findAllOnlyIds() {
+        return repository.findAllOnlyIds(5613L, 17479L);
+    }
+
+    @Override
+    public Long findOnlyResourceId(Long id) {
+        return repository.findOnlyResourceId(id);
+    }
+
+    @Override
+    public Card updatePrice(Long id, Price price) {
+        CardEntity cardEntity = repository
+                .findById(id)
+                .orElseThrow(() -> new RuntimeException("Card informado não foi encontrado"));
+
+        cardEntity.updatePrice(price);
+        repository.save(cardEntity);
+
+        return CardFacade.create(cardEntity);
     }
 }

@@ -1,6 +1,7 @@
 package br.com.fifa.futcrawler.infrastructure.price;
 
 import br.com.fifa.futcrawler.application.price.FutExternalApi;
+import br.com.fifa.futcrawler.domain.price.Price;
 import br.com.fifa.futcrawler.infrastructure.price.dto.PricesDTO;
 import br.com.fifa.futcrawler.infrastructure.price.dto.ResponseApiPriceDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,9 +31,9 @@ public class FutExternalApiImpl implements FutExternalApi {
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Override
-    public BigDecimal getCardPrice(Long idCard, String console) {
+    public Price getCardPrice(Long idCard, String console) {
         try {
-            BigDecimal price = BigDecimal.ZERO;
+            Price price = new Price();
             Map<String, Long> params = Map.of(PLAYER_PARAM, idCard);
 
             ResponseEntity<ResponseApiPriceDTO> response = restTemplate
@@ -43,13 +44,22 @@ public class FutExternalApiImpl implements FutExternalApi {
 
                 switch (console) {
                     case XBOX:
-                        price = pricesDTO.getXbox().getlCPrice();
+                        price = new Price(
+                                pricesDTO.getXbox().getlCPrice(),
+                                pricesDTO.getXbox().getMinPrice(),
+                                pricesDTO.getXbox().getMaxPrice());
                         break;
                     case PLAYSTATION:
-                        price = pricesDTO.getPs().getlCPrice();
+                        price = new Price(
+                                pricesDTO.getPs().getlCPrice(),
+                                pricesDTO.getPs().getMinPrice(),
+                                pricesDTO.getPs().getMaxPrice());
                         break;
                     case PC:
-                        price = pricesDTO.getPc().getlCPrice();
+                        price = new Price(
+                                pricesDTO.getPc().getlCPrice(),
+                                pricesDTO.getPc().getMinPrice(),
+                                pricesDTO.getPc().getMaxPrice());
                         break;
                 }
             } else {
@@ -60,6 +70,7 @@ public class FutExternalApiImpl implements FutExternalApi {
             }
 
             return price;
+
         } catch (RestClientException e) {
             logger.error(e.getMessage());
             throw new RuntimeException(String.format(

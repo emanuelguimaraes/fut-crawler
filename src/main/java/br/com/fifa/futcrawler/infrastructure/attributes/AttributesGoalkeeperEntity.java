@@ -36,9 +36,7 @@ public class AttributesGoalkeeperEntity extends AttributesEntity {
     @Size(min = 1, max = 99, message = "Valor inválido para o atributo de Velocidade")
     private int speed = 1;
 
-    public AttributesGoalkeeperEntity() {
-
-    }
+    public AttributesGoalkeeperEntity() { }
 
     public AttributesGoalkeeperEntity(CardEntity card, Goalkeeper attributes) {
         super(card);

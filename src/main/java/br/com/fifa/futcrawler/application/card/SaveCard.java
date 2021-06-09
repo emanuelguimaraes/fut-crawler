@@ -13,7 +13,7 @@ public class SaveCard {
     }
 
     public void execute(CardDetailsDTO dto) {
-        Card card = dto.parseFromCartao();
+        Card card = dto.parseFromCard();
         repository.save(card);
     }
 }

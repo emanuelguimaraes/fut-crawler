@@ -39,27 +39,15 @@ public class LargestOverallsByPosition {
                         card.getNation(),
                         card.getPosition(),
                         card.getRevision(),
-                        card.getOverall()
+                        card.getOverall(),
+                        card.getPrice()
                 ))
                 .collect(Collectors.toList());
 
         for (CardResponse card : cardsResponse) {
             card.addChemistry(chemistryService.execute(card.getId(), request.getPosition()).getName());
-            card.addPrice(priceService.execute(card.getId(), request.getConsole()));
         }
 
-        return cardsResponse
-                .stream()
-                .filter(card -> {
-                    if (request.getPrice() == null) {
-                        return true;
-                    } else if ((card.getPriceNumber().compareTo(request.getPrice()) <= 0)
-                            && (card.getPriceNumber().compareTo(BigDecimal.ZERO) > 0)) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                })
-                .collect(Collectors.toList());
+        return cardsResponse;
     }
 }

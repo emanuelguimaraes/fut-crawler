@@ -1,8 +1,8 @@
 package br.com.fifa.futcrawler.application.price;
 
-import java.math.BigDecimal;
+import br.com.fifa.futcrawler.domain.price.Price;
 
 public interface FutExternalApi {
 
-    BigDecimal getCardPrice(Long idCard, String console);
+    Price getCardPrice(Long idCard, String console);
 }

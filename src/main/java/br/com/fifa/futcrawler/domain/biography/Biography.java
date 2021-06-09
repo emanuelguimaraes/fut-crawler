@@ -12,7 +12,7 @@ public class Biography {
     private Long idResource;
 
     public Biography(int height, int weight, String nation, String revision, int skills,
-                     Foot foot, int weakFoot) {
+                     Foot foot, int weakFoot, Long idResource) {
         this.height = height;
         this.weight = weight;
         this.nation = nation;
@@ -20,6 +20,7 @@ public class Biography {
         this.skills = skills;
         this.foot = foot;
         this.weakFoot = weakFoot;
+        this.idResource = idResource;
     }
 
     public int getHeight() {
@@ -48,10 +49,6 @@ public class Biography {
 
     public int getWeakFoot() {
         return weakFoot;
-    }
-
-    public void setIdResource(Long idResource) {
-        this.idResource = idResource;
     }
 
     public Long getIdResource() {

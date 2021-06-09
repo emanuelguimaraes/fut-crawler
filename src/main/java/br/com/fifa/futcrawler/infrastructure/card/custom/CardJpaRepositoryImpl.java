@@ -10,6 +10,8 @@ import br.com.fifa.futcrawler.infrastructure.attributes.weight.AttributesWeightE
 import br.com.fifa.futcrawler.infrastructure.attributes.weight.AttributesWeightEntity_;
 import br.com.fifa.futcrawler.infrastructure.card.CardEntity;
 import br.com.fifa.futcrawler.infrastructure.card.CardEntity_;
+import br.com.fifa.futcrawler.infrastructure.price.PriceEntity;
+import br.com.fifa.futcrawler.infrastructure.price.PriceEntity_;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
@@ -31,7 +33,8 @@ public class CardJpaRepositoryImpl implements CardJpaCustomRepository {
     private EntityManager entityManager;
 
     @Override
-    public List<CardDTO> findAllByAttributesType(Role position, Long idCard, String nation, String league, Pageable pageable) {
+    public List<CardDTO> findAllByAttributesType(Role position, Long idCard, String nation, String league,
+                                                 BigDecimal price, Pageable pageable) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery query = builder.createQuery();
 
@@ -39,11 +42,15 @@ public class CardJpaRepositoryImpl implements CardJpaCustomRepository {
         Root<AttributesPlayerEntity> rootAttributes = query.from(AttributesPlayerEntity.class);
         Root<AttributesWeightEntity> rootWeight = query.from(AttributesWeightEntity.class);
         Root<ChemistryEntity> rootChemistry = query.from(ChemistryEntity.class);
+        Root<PriceEntity> rootPrice = query.from(PriceEntity.class);
         List<Predicate> predicates = new ArrayList<>();
 
         predicates.add(builder.equal(rootCard.get(CardEntity_.id),
                 rootAttributes.get(AttributesPlayerEntity_.card).get(CardEntity_.id)));
         predicates.add(builder.equal(rootWeight.get(AttributesWeightEntity_.position), position));
+        predicates.add(builder.equal(rootCard.get(CardEntity_.id),
+                rootPrice.get(PriceEntity_.card).get(CardEntity_.id)));
+        predicates.add(builder.gt(rootPrice.get(PriceEntity_.currentValue), BigDecimal.ZERO));
 
         if (idCard != null) {
             predicates.add(builder.equal(rootCard.get(CardEntity_.id), idCard));
@@ -57,6 +64,10 @@ public class CardJpaRepositoryImpl implements CardJpaCustomRepository {
             predicates.add(builder.equal(rootCard.get(CardEntity_.league), league));
         }
 
+        if (price != null) {
+            predicates.add(builder.le(rootPrice.get(PriceEntity_.currentValue), price));
+        }
+
         Expression<BigDecimal> overall = generateOverall(builder, rootAttributes, rootWeight, rootChemistry);
 
         query.select(builder.construct(
@@ -68,7 +79,8 @@ public class CardJpaRepositoryImpl implements CardJpaCustomRepository {
                 rootCard.get(CardEntity_.nation),
                 rootCard.get(CardEntity_.position),
                 rootCard.get(CardEntity_.revision),
-                builder.max(overall)))
+                builder.max(overall),
+                rootPrice.get(PriceEntity_.currentValue)))
         .where(predicates.toArray(new Predicate[predicates.size()]))
         .groupBy(
                 rootCard.get(CardEntity_.id),
@@ -77,7 +89,8 @@ public class CardJpaRepositoryImpl implements CardJpaCustomRepository {
                 rootCard.get(CardEntity_.league),
                 rootCard.get(CardEntity_.nation),
                 rootCard.get(CardEntity_.position),
-                rootCard.get(CardEntity_.revision))
+                rootCard.get(CardEntity_.revision),
+                rootPrice.get(PriceEntity_.currentValue))
         .orderBy(builder.desc(builder.max(overall)));
 
         return entityManager

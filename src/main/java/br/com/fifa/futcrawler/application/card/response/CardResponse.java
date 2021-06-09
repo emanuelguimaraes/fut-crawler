@@ -24,7 +24,7 @@ public class CardResponse {
     private BigDecimal price;
 
     public CardResponse(Long id, String name, String club, String league, String nation,
-                        Role position, String revision, BigDecimal overall) {
+                        Role position, String revision, BigDecimal overall, BigDecimal price) {
         setFormat();
         this.id = id;
         this.name = name;
@@ -34,6 +34,7 @@ public class CardResponse {
         this.position = position;
         this.revision = revision;
         this.overall = this.decimalFormat.format(overall);
+        this.price = price;
     }
 
     public Long getId() {

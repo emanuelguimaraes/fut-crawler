@@ -9,8 +9,10 @@ import br.com.fifa.futcrawler.domain.position.Role;
 import br.com.fifa.futcrawler.domain.position.Goalkeeper;
 import br.com.fifa.futcrawler.domain.position.Player;
 import br.com.fifa.futcrawler.domain.position.Position;
+import br.com.fifa.futcrawler.domain.price.Price;
 import br.com.fifa.futcrawler.infrastructure.attributes.AttributesGoalkeeperEntity;
 import br.com.fifa.futcrawler.infrastructure.attributes.AttributesPlayerEntity;
+import br.com.fifa.futcrawler.infrastructure.price.PriceEntity;
 
 public class CardFacade {
 
@@ -18,23 +20,21 @@ public class CardFacade {
         return new Card(cardEntity.getName(),
                 createBiography(cardEntity),
                 createPosition(cardEntity),
-                createClub(cardEntity)
+                createClub(cardEntity),
+                createPrice(cardEntity.getPrice())
         );
     }
 
     private static Biography createBiography(CardEntity cardEntity) {
-        Biography biography = new Biography(
+        return new Biography(
                 cardEntity.getHeight(),
                 cardEntity.getWeight(),
                 cardEntity.getNation(),
                 cardEntity.getRevision(),
                 cardEntity.getSkills(),
                 cardEntity.getFoot(),
-                cardEntity.getWeakFoot());
-
-        biography.setIdResource(cardEntity.getIdResource());
-
-        return biography;
+                cardEntity.getWeakFoot(),
+                cardEntity.getIdResource());
     }
 
     private static Position createPosition(CardEntity cardEntity) {
@@ -67,6 +67,16 @@ public class CardFacade {
                 cardEntity.getClub(),
                 new League(cardEntity.getLeague())
         );
+    }
+
+    private static Price createPrice(PriceEntity priceEntity) {
+        if (priceEntity != null) {
+            return new Price(priceEntity.getCurrentValue(),
+                    priceEntity.getMinValue(),
+                    priceEntity.getMaxValue());
+        } else {
+            return null;
+        }
     }
 
     private static Pace createPaceAttributes(AttributesPlayerEntity atributos) {

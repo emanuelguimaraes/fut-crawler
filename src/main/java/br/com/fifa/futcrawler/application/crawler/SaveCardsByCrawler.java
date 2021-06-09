@@ -1,9 +1,12 @@
 package br.com.fifa.futcrawler.application.crawler;
 
 import br.com.fifa.futcrawler.application.card.SaveCard;
+import br.com.fifa.futcrawler.application.crawler.dto.CardDetailsDTO;
 import br.com.fifa.futcrawler.application.crawler.dto.SimpleCardDTO;
 import br.com.fifa.futcrawler.application.crawler.exception.CrawlerException;
 import br.com.fifa.futcrawler.application.crawler.response.CrawlerResponse;
+import br.com.fifa.futcrawler.application.price.FutExternalApi;
+import br.com.fifa.futcrawler.application.price.GetCardPrice;
 import br.com.fifa.futcrawler.domain.card.CardRepository;
 
 import java.math.BigDecimal;
@@ -16,28 +19,33 @@ public class SaveCardsByCrawler {
     private static final String SITE_URL = "https://www.futbin.com/21/players?page=";
 
     private final CardRepository repository;
-    private final Crawler crawler;
-    private final SaveCard saveCard;
+    private final Crawler crawlerService;
+    private final SaveCard saveCardService;
+    private final FutExternalApi futApi;
 
-    public SaveCardsByCrawler(CardRepository repository, Crawler crawler) {
+    public SaveCardsByCrawler(CardRepository repository, Crawler crawlerService, FutExternalApi futApi) {
         this.repository = repository;
-        this.crawler = crawler;
-        this.saveCard = new SaveCard(repository);
+        this.crawlerService = crawlerService;
+        this.saveCardService = new SaveCard(repository);
+        this.futApi = futApi;
     }
 
-    public CrawlerResponse execute(int initialIndex, int finalIndex) {
+    public CrawlerResponse execute(int initialIndex, int finalIndex, String console) {
         try {
             BigDecimal totalSaved = BigDecimal.ZERO;
 
             for (int index = initialIndex; index <= finalIndex; index++) {
                 try {
-                    List<SimpleCardDTO> cards = crawler.getListCards(SITE_URL.concat(Integer.toString(index)))
+                    List<SimpleCardDTO> cards = crawlerService.getListCards(SITE_URL.concat(Integer.toString(index)))
                             .stream()
                             .filter(card -> repository.findByResourceId(card.getResourceId()).isEmpty())
                             .collect(Collectors.toList());
 
                     for (SimpleCardDTO card : cards) {
-                        saveCard.execute(crawler.getCardDetails(card.getUrl()));
+                        CardDetailsDTO cardDetailsDTO = crawlerService.getCardDetails(card.getUrl());
+                        cardDetailsDTO.addPrice(futApi.getCardPrice(cardDetailsDTO.getIdResource(), console));
+
+                        saveCardService.execute(cardDetailsDTO);
                         totalSaved = totalSaved.add(BigDecimal.ONE);
                     }
 

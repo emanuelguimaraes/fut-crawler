@@ -11,7 +11,9 @@ import br.com.fifa.futcrawler.domain.position.Goalkeeper;
 import br.com.fifa.futcrawler.domain.position.Player;
 import br.com.fifa.futcrawler.domain.position.Position;
 import br.com.fifa.futcrawler.domain.position.Role;
+import br.com.fifa.futcrawler.domain.price.Price;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 public class CardDetailsDTO {
@@ -57,12 +59,15 @@ public class CardDetailsDTO {
     private int diving;
     private int handling;
     private int kicking;
-    private int positionningGoalkeeper;
+    private int positioningGoalkeeper;
     private int reflexesGoalkeeper;
     private int speed;
     private String club;
     private String league;
     private Long idResource;
+    private BigDecimal currentValue;
+    private BigDecimal minValue;
+    private BigDecimal maxValue;
 
     public CardDetailsDTO(Map<String, String> fields) {
         name = parseString(fields.get(CardUtil.NAME));
@@ -82,7 +87,7 @@ public class CardDetailsDTO {
             diving = parseInt(fields.get(CardUtil.DIVING));
             handling = parseInt(fields.get(CardUtil.HANDLING));
             kicking = parseInt(fields.get(CardUtil.KICKING));
-            positionningGoalkeeper = parseInt(fields.get(CardUtil.POSITIONNING_GOALKEEPER));
+            positioningGoalkeeper = parseInt(fields.get(CardUtil.POSITIONNING_GOALKEEPER));
             reflexesGoalkeeper = parseInt(fields.get(CardUtil.REFLEXES_GOALKEEPER));
             speed = parseInt(fields.get(CardUtil.SPEED));
         } else {
@@ -118,15 +123,12 @@ public class CardDetailsDTO {
         }
     }
 
-    public Card parseFromCartao() {
-        Card card = new Card(this.name,
+    public Card parseFromCard() {
+        return new Card(this.name,
                 createBiography(),
                 createPosition(),
-                createClub());
-
-        card.getBiography().setIdResource(this.idResource);
-
-        return card;
+                createClub(),
+                createPrice());
     }
 
     private Biography createBiography() {
@@ -137,7 +139,8 @@ public class CardDetailsDTO {
                 this.revision,
                 this.skills,
                 this.foot,
-                this.weakFoot);
+                this.weakFoot,
+                this.idResource);
     }
 
     private Position createPosition() {
@@ -146,7 +149,7 @@ public class CardDetailsDTO {
                     this.diving,
                     this.handling,
                     this.kicking,
-                    this.positionningGoalkeeper,
+                    this.positioningGoalkeeper,
                     this.reflexesGoalkeeper,
                     this.speed
             );
@@ -167,6 +170,14 @@ public class CardDetailsDTO {
         return new Club(
                 this.club,
                 new League(this.league)
+        );
+    }
+
+    private Price createPrice() {
+        return new Price(
+                currentValue,
+                minValue,
+                maxValue
         );
     }
 
@@ -624,12 +635,12 @@ public class CardDetailsDTO {
         this.kicking = kicking;
     }
 
-    public int getPositionningGoalkeeper() {
-        return positionningGoalkeeper;
+    public int getPositioningGoalkeeper() {
+        return positioningGoalkeeper;
     }
 
-    public void setPositionningGoalkeeper(int positionningGoalkeeper) {
-        this.positionningGoalkeeper = positionningGoalkeeper;
+    public void setPositioningGoalkeeper(int positioningGoalkeeper) {
+        this.positioningGoalkeeper = positioningGoalkeeper;
     }
 
     public int getReflexesGoalkeeper() {
@@ -650,5 +661,23 @@ public class CardDetailsDTO {
 
     public Long getIdResource() {
         return idResource;
+    }
+
+    public BigDecimal getCurrentValue() {
+        return currentValue;
+    }
+
+    public BigDecimal getMinValue() {
+        return minValue;
+    }
+
+    public BigDecimal getMaxValue() {
+        return maxValue;
+    }
+
+    public void addPrice(Price price) {
+        this.currentValue = price.getCurrentValue();
+        this.minValue = price.getMinValue();
+        this.maxValue = price.getMaxValue();
     }
 }

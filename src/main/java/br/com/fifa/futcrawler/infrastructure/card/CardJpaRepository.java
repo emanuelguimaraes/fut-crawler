@@ -16,4 +16,10 @@ public interface CardJpaRepository extends JpaRepository<CardEntity, Long>, Card
 
     @Query("SELECT c FROM CardEntity c WHERE c.idResource = :idResource")
     List<CardEntity> findByIdResource(Long idResource);
+
+    @Query("SELECT c.id FROM CardEntity c WHERE c.id BETWEEN :initialId AND :finalId")
+    List<Long> findAllOnlyIds(Long initialId, Long finalId);
+
+    @Query("SELECT c.idResource FROM CardEntity c WHERE c.id = :id")
+    Long findOnlyResourceId(Long id);
 }

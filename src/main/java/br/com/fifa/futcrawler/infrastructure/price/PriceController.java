@@ -1,8 +1,8 @@
 package br.com.fifa.futcrawler.infrastructure.price;
 
 import br.com.fifa.futcrawler.application.price.GetCardPrice;
+import br.com.fifa.futcrawler.domain.price.Price;
 import br.com.fifa.futcrawler.infrastructure.card.CardRepositoryImpl;
-import br.com.fifa.futcrawler.infrastructure.price.response.CardPriceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +21,7 @@ public class PriceController {
     }
 
     @GetMapping("/card/{idCard}/price")
-    public ResponseEntity<CardPriceResponse> getCardPrice(@PathVariable Long idCard, @RequestParam String console) {
-        return ResponseEntity.ok(new CardPriceResponse(getCardPriceService.execute(idCard, console)));
+    public ResponseEntity<Price> getCardPrice(@PathVariable Long idCard, @RequestParam String console) {
+        return ResponseEntity.ok(getCardPriceService.execute(idCard, console));
     }
 }

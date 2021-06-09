@@ -5,9 +5,11 @@ import br.com.fifa.futcrawler.domain.card.Card;
 import br.com.fifa.futcrawler.domain.position.Role;
 import br.com.fifa.futcrawler.domain.position.Goalkeeper;
 import br.com.fifa.futcrawler.domain.position.Player;
+import br.com.fifa.futcrawler.domain.price.Price;
 import br.com.fifa.futcrawler.infrastructure.attributes.AttributesEntity;
 import br.com.fifa.futcrawler.infrastructure.attributes.AttributesGoalkeeperEntity;
 import br.com.fifa.futcrawler.infrastructure.attributes.AttributesPlayerEntity;
+import br.com.fifa.futcrawler.infrastructure.price.PriceEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -67,6 +69,9 @@ public class CardEntity {
     @OneToOne(mappedBy = "card", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private AttributesEntity attributes;
 
+    @OneToOne(mappedBy = "card", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private PriceEntity price;
+
     public CardEntity() { }
 
     public CardEntity(Card card) {
@@ -90,6 +95,8 @@ public class CardEntity {
         if (card.getPosition() instanceof Player) {
             this.attributes = new AttributesPlayerEntity(this, (Player) card.getPosition());
         }
+
+        this.price = new PriceEntity(this, card.getPrice());
     }
 
     public Long getId() {
@@ -146,5 +153,17 @@ public class CardEntity {
 
     public AttributesEntity getAttributes() {
         return attributes;
+    }
+
+    public PriceEntity getPrice() {
+        return price;
+    }
+
+    public void updatePrice(Price price) {
+        if (this.price == null) {
+            this.price = new PriceEntity(this, price);
+        } else {
+            this.price.updateValues(price);
+        }
     }
 }

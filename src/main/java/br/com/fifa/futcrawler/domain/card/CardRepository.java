@@ -20,7 +20,7 @@ public interface CardRepository {
 
     List<Card> findByResourceId(Long idResource);
 
-    List<Long> findAllOnlyIds();
+    List<Long> findAllOnlyIds(Long initialId, Long finalId);
 
     Long findOnlyResourceId(Long id);
 

@@ -70,8 +70,8 @@ public class CardRepositoryImpl implements CardRepository {
     }
 
     @Override
-    public List<Long> findAllOnlyIds() {
-        return repository.findAllOnlyIds(5613L, 17479L);
+    public List<Long> findAllOnlyIds(Long initialId, Long finalId) {
+        return repository.findAllOnlyIds(initialId, finalId);
     }
 
     @Override

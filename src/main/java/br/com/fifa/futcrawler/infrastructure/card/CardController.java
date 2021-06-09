@@ -46,7 +46,8 @@ public class CardController {
     }
 
     @PutMapping("/prices")
-    public ResponseEntity<List<Card>> updateCardsPrice(@RequestParam String console) {
-        return ResponseEntity.ok(updateCardsPriceService.execute(console));
+    public ResponseEntity<List<Card>> updateCardsPrice(@RequestParam Long initialId, @RequestParam Long finalId,
+                                                       @RequestParam String console) {
+        return ResponseEntity.ok(updateCardsPriceService.execute(initialId, finalId, console));
     }
 }

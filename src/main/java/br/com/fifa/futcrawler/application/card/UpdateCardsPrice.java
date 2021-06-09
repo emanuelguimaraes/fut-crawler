@@ -19,9 +19,9 @@ public class UpdateCardsPrice {
         this.getCardPriceService = new GetCardPrice(repository, futApi);
     }
 
-    public List<Card> execute(String console) {
+    public List<Card> execute(Long initialId, Long finalId, String console) {
         List<Card> cardsResponse = new ArrayList<>();
-        List<Long> idCards = repository.findAllOnlyIds();
+        List<Long> idCards = repository.findAllOnlyIds(initialId, finalId);
 
         for (Long idCard : idCards) {
             Price price = getCardPriceService.execute(idCard, console);

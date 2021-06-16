@@ -167,7 +167,10 @@ public class AttributesWeightEntity {
 
     public AttributesWeightEntity(AttributesWeight weight) {
         this.position = weight.getPosition();
+        this.updateAttributes(weight);
+    }
 
+    public void updateAttributes(AttributesWeight weight) {
         if (Role.GK.equals(weight.getPosition())) {
             this.diving = ((WeightGoalkeeper) weight).getDiving();
             this.handling = ((WeightGoalkeeper) weight).getHandling();

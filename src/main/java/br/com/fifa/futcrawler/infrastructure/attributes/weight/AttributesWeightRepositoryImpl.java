@@ -20,4 +20,16 @@ public class AttributesWeightRepositoryImpl implements AttributesWeightRepositor
         AttributesWeightEntity entity = new AttributesWeightEntity(weight);
         repository.save(entity);
     }
+
+    @Override
+    public void update(Long id, AttributesWeight weight) {
+        AttributesWeightEntity entity = repository
+                .findById(id)
+                .orElseThrow(() -> new RuntimeException("Não foi possível encontrar o peso dos atributos informado"));
+
+        entity.updateAttributes(weight);
+
+        repository.save(entity);
+    }
 }
+

@@ -36,9 +36,14 @@ public class SaveCardsByCrawler {
 
             for (int index = initialIndex; index <= finalIndex; index++) {
                 try {
-                    List<SimpleCardDTO> cards = crawlerService.getListCards(SITE_URL.concat(Integer.toString(index)))
-                            .stream()
-                            .filter(card -> repository.findByResourceId(card.getResourceId()).isEmpty())
+                    List<SimpleCardDTO> cards = crawlerService.getListCards(SITE_URL.concat(Integer.toString(index)));
+
+                    List<Long> cardsNotSaved = repository.findByResourceIds(cards.stream()
+                            .map(SimpleCardDTO::getResourceId)
+                            .collect(Collectors.toList()));
+
+                    cards = cards.stream()
+                            .filter(card -> !cardsNotSaved.contains(card.getResourceId()))
                             .collect(Collectors.toList());
 
                     for (SimpleCardDTO card : cards) {

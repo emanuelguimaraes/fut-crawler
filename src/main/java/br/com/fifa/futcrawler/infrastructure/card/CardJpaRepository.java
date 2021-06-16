@@ -14,8 +14,8 @@ public interface CardJpaRepository extends JpaRepository<CardEntity, Long>, Card
     @Query("SELECT c FROM CardEntity c WHERE c.name = :name AND c.revision = :revision")
     Optional<CardEntity> findByNomeAndVersao(String name, String revision);
 
-    @Query("SELECT c FROM CardEntity c WHERE c.idResource = :idResource")
-    List<CardEntity> findByIdResource(Long idResource);
+    @Query("SELECT c.idResource FROM CardEntity c WHERE c.idResource IN (:resourceIds)")
+    List<Long> findByResourceIds(List<Long> resourceIds);
 
     @Query("SELECT c.id FROM CardEntity c WHERE c.id BETWEEN :initialId AND :finalId")
     List<Long> findAllOnlyIds(Long initialId, Long finalId);

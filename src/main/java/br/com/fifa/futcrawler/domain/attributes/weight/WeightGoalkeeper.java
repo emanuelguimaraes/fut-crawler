@@ -47,4 +47,14 @@ public class WeightGoalkeeper extends AttributesWeight {
     public BigDecimal getSpeed() {
         return speed;
     }
+
+    @Override
+    public BigDecimal sumAttributes() {
+        return this.diving
+                .add(this.handling)
+                .add(this.kicking)
+                .add(this.positionning)
+                .add(this.reflexes)
+                .add(this.speed);
+    }
 }

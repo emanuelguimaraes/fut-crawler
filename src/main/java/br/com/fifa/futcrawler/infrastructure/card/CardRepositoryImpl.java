@@ -60,13 +60,8 @@ public class CardRepositoryImpl implements CardRepository {
     }
 
     @Override
-    public List<Card> findByResourceId(Long idResource) {
-        List<CardEntity> cardsEntity = repository.findByIdResource(idResource);
-
-        return cardsEntity
-                .stream()
-                .map(CardFacade::create)
-                .collect(Collectors.toList());
+    public List<Long> findByResourceIds(List<Long> resourceIds) {
+        return repository.findByResourceIds(resourceIds);
     }
 
     @Override

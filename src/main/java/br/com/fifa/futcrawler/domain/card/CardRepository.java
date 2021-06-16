@@ -5,7 +5,6 @@ import br.com.fifa.futcrawler.domain.card.dto.CardDTO;
 import br.com.fifa.futcrawler.domain.price.Price;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 public interface CardRepository {
@@ -18,7 +17,7 @@ public interface CardRepository {
 
     Optional<Card> findByNameAndRevision(String name, String revision);
 
-    List<Card> findByResourceId(Long idResource);
+    List<Long> findByResourceIds(List<Long> resourceIds);
 
     List<Long> findAllOnlyIds(Long initialId, Long finalId);
 

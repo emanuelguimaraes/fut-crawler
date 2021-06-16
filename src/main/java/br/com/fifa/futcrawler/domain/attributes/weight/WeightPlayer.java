@@ -49,4 +49,37 @@ public class WeightPlayer extends AttributesWeight {
     public Physicality<BigDecimal> getPhysicality() {
         return physicality;
     }
+
+    @Override
+    public BigDecimal sumAttributes() {
+        return this.pace.getAcceleration()
+                .add(this.pace.getSprintSpeed())
+                .add(this.shooting.getFinishing())
+                .add(this.shooting.getLongShots())
+                .add(this.shooting.getPenalties())
+                .add(this.shooting.getPositioning())
+                .add(this.shooting.getShotPower())
+                .add(this.shooting.getVolleys())
+                .add(this.passing.getCrossing())
+                .add(this.passing.getCurve())
+                .add(this.passing.getFkAccuracy())
+                .add(this.passing.getLongPassing())
+                .add(this.passing.getShortPassing())
+                .add(this.passing.getVision())
+                .add(this.dribbling.getAgility())
+                .add(this.dribbling.getBalance())
+                .add(this.dribbling.getBallControl())
+                .add(this.dribbling.getComposure())
+                .add(this.dribbling.getDribbling())
+                .add(this.dribbling.getReactions())
+                .add(this.defending.getHeadingAccuracy())
+                .add(this.defending.getInterceptions())
+                .add(this.defending.getMarking())
+                .add(this.defending.getSlidingTackle())
+                .add(this.defending.getStadingTackle())
+                .add(this.physicality.getAggression())
+                .add(this.physicality.getJumping())
+                .add(this.physicality.getStamina())
+                .add(this.physicality.getStrength());
+    }
 }

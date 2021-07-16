@@ -24,7 +24,8 @@ public class CardResponse {
     private BigDecimal price;
 
     public CardResponse(Long id, String name, String club, String league, String nation,
-                        Role position, String revision, BigDecimal overall, BigDecimal price) {
+                        Role position, String revision, BigDecimal overall, ChemistryType chemistry,
+                        BigDecimal price) {
         setFormat();
         this.id = id;
         this.name = name;
@@ -34,6 +35,7 @@ public class CardResponse {
         this.position = position;
         this.revision = revision;
         this.overall = this.decimalFormat.format(overall);
+        this.chemistry = chemistry;
         this.price = price;
     }
 
@@ -71,10 +73,6 @@ public class CardResponse {
 
     public ChemistryType getChemistry() {
         return chemistry;
-    }
-
-    public void addChemistry(ChemistryType chemistry) {
-        this.chemistry = chemistry;
     }
 
     public String getPrice() {

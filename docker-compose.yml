@@ -1,15 +1,14 @@
 version: '3.7'
 services:
-  db:
-    image: postgres:13
+  server:
+    image: emanuelguimaraes23/fut-api
     environment:
-      POSTGRES_PASSWORD: gbTKoAdj0J
-      POSTGRES_USER: fut-user
-      POSTGRES_DB: fut-database
+      FUT_DATABASE: ${FUT_DATABASE}
+      FUT_USER: ${FUT_USER}
+      FUT_PASSWORD: ${FUT_PASSWORD}
+      SPRING_PROFILES_ACTIVE: production
     ports:
-      - '5432:5432'
-    volumes:
-      - ~/Users/emanueljoseguimaraesbrito/Documents/Desenvolvimento/workspace/Database/fut:/var/lib/postgresql/data
+      - '8080:8080'
     networks:
       - fut-production
 networks:

@@ -8,7 +8,6 @@ import br.com.fifa.futcrawler.application.crawler.SaveCardsByCrawler;
 import br.com.fifa.futcrawler.application.crawler.request.CrawlerRequest;
 import br.com.fifa.futcrawler.application.crawler.response.CrawlerResponse;
 import br.com.fifa.futcrawler.domain.card.Card;
-import br.com.fifa.futcrawler.infrastructure.attributes.chemistry.ChemistryRepositoryImpl;
 import br.com.fifa.futcrawler.infrastructure.crawler.CrawlerJsoup;
 import br.com.fifa.futcrawler.infrastructure.price.FutExternalApiImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +26,10 @@ public class CardController {
     private final UpdateCardsPrice updateCardsPriceService;
 
     @Autowired
-    public CardController(CardRepositoryImpl cardRepository, ChemistryRepositoryImpl chemistryRepository,
+    public CardController(CardRepositoryImpl cardRepository,
                           CrawlerJsoup crawlerJsoup, FutExternalApiImpl futApi) {
         this.crawlerService = new SaveCardsByCrawler(cardRepository, crawlerJsoup, futApi);
-        this.overallsByPositionService = new LargestOverallsByPosition(cardRepository, futApi, chemistryRepository);
+        this.overallsByPositionService = new LargestOverallsByPosition(cardRepository, futApi);
         this.updateCardsPriceService = new UpdateCardsPrice(cardRepository, futApi);
     }
 

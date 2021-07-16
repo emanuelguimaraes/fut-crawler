@@ -1,5 +1,6 @@
 package br.com.fifa.futcrawler.domain.card.dto;
 
+import br.com.fifa.futcrawler.domain.attributes.chemistry.ChemistryType;
 import br.com.fifa.futcrawler.domain.position.Role;
 
 import java.math.BigDecimal;
@@ -14,6 +15,7 @@ public class CardDTO {
     private Role position;
     private String revision;
     private BigDecimal overall;
+    private ChemistryType chemistry;
     private BigDecimal price;
 
     public CardDTO(Long id, String name, String club, String league, String nation,
@@ -59,6 +61,14 @@ public class CardDTO {
 
     public BigDecimal getOverall() {
         return overall;
+    }
+
+    public ChemistryType getChemistry() {
+        return chemistry;
+    }
+
+    public void addChemistry(ChemistryType chemistry) {
+        this.chemistry = chemistry;
     }
 
     public BigDecimal getPrice() {

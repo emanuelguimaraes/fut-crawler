@@ -4,14 +4,15 @@ import br.com.fifa.futcrawler.application.card.request.OverallsRequest;
 import br.com.fifa.futcrawler.domain.card.Card;
 import br.com.fifa.futcrawler.domain.card.CardRepository;
 import br.com.fifa.futcrawler.domain.card.dto.CardDTO;
+import br.com.fifa.futcrawler.domain.position.Role;
 import br.com.fifa.futcrawler.domain.price.Price;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class CardRepositoryImpl implements CardRepository {
@@ -37,9 +38,17 @@ public class CardRepositoryImpl implements CardRepository {
     }
 
     @Override
-    public List<CardDTO> findAllByAttributesType(OverallsRequest request) {
-        return repository.findAllByAttributesType(request.getPosition(), request.getIdCard(), request.getNation(),
-                request.getLeague(), request.getPrice(), PageRequest.of(request.getPage(), TOTAL_ITENS_PER_PAGE));
+    public List<CardDTO> findAllByAttributesType(OverallsRequest request, BigDecimal thrustValue) {
+        List<CardDTO> cards =  repository.findAllByAttributesType(request.getPosition(), request.getIdCard(),
+                request.getNation(), request.getLeague(), request.getPrice(), thrustValue,
+                PageRequest.of(request.getPage(), TOTAL_ITENS_PER_PAGE));
+
+        cards.forEach(card -> card.addChemistry(repository.findBestChemistryByCard(
+                card.getId(),
+                request.getPosition(),
+                thrustValue)));
+
+        return cards;
     }
 
     @Override

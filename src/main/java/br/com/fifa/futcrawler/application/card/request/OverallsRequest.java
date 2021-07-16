@@ -13,6 +13,8 @@ public class OverallsRequest {
     private Long idCard;
     private String nation;
     private String league;
+    private BigDecimal chemistryTeam = BigDecimal.valueOf(100);
+    private BigDecimal chemistryPlayer = BigDecimal.TEN;
 
     public Role getPosition() {
         return position;
@@ -68,5 +70,21 @@ public class OverallsRequest {
 
     public void setLeague(String league) {
         this.league = league;
+    }
+
+    public BigDecimal getChemistryTeam() {
+        return chemistryTeam;
+    }
+
+    public void setChemistryTeam(BigDecimal chemistryTeam) {
+        this.chemistryTeam = chemistryTeam;
+    }
+
+    public BigDecimal getChemistryPlayer() {
+        return chemistryPlayer;
+    }
+
+    public void setChemistryPlayer(BigDecimal chemistryPlayer) {
+        this.chemistryPlayer = chemistryPlayer;
     }
 }

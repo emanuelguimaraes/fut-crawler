@@ -284,7 +284,7 @@ public class CardDetailsDTO {
     }
 
     private String parseString(String value) {
-        if (value.isBlank()) {
+        if (value == null || value.isBlank()) {
             return "NAN";
         }
 

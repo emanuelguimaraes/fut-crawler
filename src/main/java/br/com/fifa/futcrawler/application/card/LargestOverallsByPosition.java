@@ -2,8 +2,6 @@ package br.com.fifa.futcrawler.application.card;
 
 import br.com.fifa.futcrawler.application.card.request.OverallsRequest;
 import br.com.fifa.futcrawler.application.card.response.CardResponse;
-import br.com.fifa.futcrawler.application.price.FutExternalApi;
-import br.com.fifa.futcrawler.application.price.GetCardPrice;
 import br.com.fifa.futcrawler.domain.card.CardRepository;
 
 import java.math.BigDecimal;
@@ -17,11 +15,9 @@ public class LargestOverallsByPosition {
     private static final long INDEX_THRUST = 50l;
 
     private final CardRepository repository;
-    private final GetCardPrice priceService;
 
-    public LargestOverallsByPosition(CardRepository repository, FutExternalApi futApi) {
+    public LargestOverallsByPosition(CardRepository repository) {
         this.repository = repository;
-        this.priceService = new GetCardPrice(repository, futApi);
     }
 
     public List<CardResponse> execute(OverallsRequest request) {

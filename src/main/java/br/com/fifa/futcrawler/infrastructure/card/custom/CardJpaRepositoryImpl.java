@@ -51,10 +51,11 @@ public class CardJpaRepositoryImpl implements CardJpaCustomRepository {
         predicates.add(builder.equal(rootWeight.get(AttributesWeightEntity_.position), position));
         predicates.add(builder.equal(rootCard.get(CardEntity_.id),
                 rootPrice.get(PriceEntity_.card).get(CardEntity_.id)));
-        predicates.add(builder.gt(rootPrice.get(PriceEntity_.currentValue), BigDecimal.ZERO));
 
         if (idCard != null) {
             predicates.add(builder.equal(rootCard.get(CardEntity_.id), idCard));
+        } else {
+            predicates.add(builder.gt(rootPrice.get(PriceEntity_.currentValue), BigDecimal.ZERO));
         }
 
         if (nation != null) {

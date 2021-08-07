@@ -2,7 +2,6 @@ package br.com.fifa.futcrawler.domain.card;
 
 import br.com.fifa.futcrawler.application.card.request.OverallsRequest;
 import br.com.fifa.futcrawler.domain.card.dto.CardDTO;
-import br.com.fifa.futcrawler.domain.position.Role;
 import br.com.fifa.futcrawler.domain.price.Price;
 
 import java.math.BigDecimal;

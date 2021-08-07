@@ -29,7 +29,7 @@ public class CardController {
     public CardController(CardRepositoryImpl cardRepository,
                           CrawlerJsoup crawlerJsoup, FutExternalApiImpl futApi) {
         this.crawlerService = new SaveCardsByCrawler(cardRepository, crawlerJsoup, futApi);
-        this.overallsByPositionService = new LargestOverallsByPosition(cardRepository, futApi);
+        this.overallsByPositionService = new LargestOverallsByPosition(cardRepository);
         this.updateCardsPriceService = new UpdateCardsPrice(cardRepository, futApi);
     }
 

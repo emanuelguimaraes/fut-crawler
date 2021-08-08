@@ -6,7 +6,7 @@ services:
       FUT_DATABASE: ${FUT_DATABASE}
       FUT_USER: ${FUT_USER}
       FUT_PASSWORD: ${FUT_PASSWORD}
-      SPRING_PROFILES_ACTIVE: production
+      SPRING_PROFILES_ACTIVE: default
     ports:
       - '8080:8080'
     networks:

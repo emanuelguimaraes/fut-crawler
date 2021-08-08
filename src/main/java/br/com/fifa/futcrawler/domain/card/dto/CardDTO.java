@@ -31,6 +31,18 @@ public class CardDTO {
         this.price = price;
     }
 
+    public CardDTO(Long id, String name, String club, String league, String nation,
+                   Role position, String revision, BigDecimal price) {
+        this.id = id;
+        this.name = name;
+        this.club = club;
+        this.league = league;
+        this.nation = nation;
+        this.position = position;
+        this.revision = revision;
+        this.price = price;
+    }
+
     public Long getId() {
         return id;
     }

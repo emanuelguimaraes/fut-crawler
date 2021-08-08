@@ -1,33 +1,35 @@
 package br.com.fifa.futcrawler.application.card;
 
 import br.com.fifa.futcrawler.application.price.FutExternalApi;
-import br.com.fifa.futcrawler.application.price.GetCardPrice;
-import br.com.fifa.futcrawler.domain.card.Card;
 import br.com.fifa.futcrawler.domain.card.CardRepository;
+import br.com.fifa.futcrawler.domain.card.dto.CardInfoUpdateDTO;
 import br.com.fifa.futcrawler.domain.price.Price;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UpdateCardsPrice {
 
+    private final Logger logger = LogManager.getLogger(UpdateCardsPrice.class);
+
     private final CardRepository repository;
-    private final GetCardPrice getCardPriceService;
+    private final FutExternalApi futApi;
 
     public UpdateCardsPrice(CardRepository repository, FutExternalApi futApi) {
         this.repository = repository;
-        this.getCardPriceService = new GetCardPrice(repository, futApi);
+        this.futApi = futApi;
     }
 
-    public List<Card> execute(Long initialId, Long finalId, String console) {
-        List<Card> cardsResponse = new ArrayList<>();
-        List<Long> idCards = repository.findAllOnlyIds(initialId, finalId);
+    public String execute(Long initialId, Long finalId, String console) {
+        List<CardInfoUpdateDTO> idCards = repository.findAllOnlyIdsResource(initialId, finalId);
 
-        for (Long idCard : idCards) {
-            Price price = getCardPriceService.execute(idCard, console);
-            cardsResponse.add(repository.updatePrice(idCard, price));
-        }
+        idCards.parallelStream().forEach(card -> {
+            Price price = futApi.getCardPrice(card.getIdResource(), console);
+            repository.updatePrice(card.getId(), price);
+            logger.info(String.format("Preço do Card %s atualizado com sucesso", card.getId()));
+        });
 
-        return cardsResponse;
+        return "Preços dos Cards atualizados com sucesso";
     }
 }

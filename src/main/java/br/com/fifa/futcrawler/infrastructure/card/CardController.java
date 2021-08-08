@@ -1,5 +1,6 @@
 package br.com.fifa.futcrawler.infrastructure.card;
 
+import br.com.fifa.futcrawler.application.card.FindCard;
 import br.com.fifa.futcrawler.application.card.LargestOverallsByPosition;
 import br.com.fifa.futcrawler.application.card.UpdateCardsPrice;
 import br.com.fifa.futcrawler.application.card.request.OverallsRequest;
@@ -8,6 +9,8 @@ import br.com.fifa.futcrawler.application.crawler.SaveCardsByCrawler;
 import br.com.fifa.futcrawler.application.crawler.request.CrawlerRequest;
 import br.com.fifa.futcrawler.application.crawler.response.CrawlerResponse;
 import br.com.fifa.futcrawler.domain.card.Card;
+import br.com.fifa.futcrawler.domain.card.dto.CardDTO;
+import br.com.fifa.futcrawler.domain.card.dto.CardFilterDTO;
 import br.com.fifa.futcrawler.infrastructure.crawler.CrawlerJsoup;
 import br.com.fifa.futcrawler.infrastructure.price.FutExternalApiImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +21,13 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cards")
+@RequestMapping("cards")
 public class CardController {
 
     private final SaveCardsByCrawler crawlerService;
     private final LargestOverallsByPosition overallsByPositionService;
     private final UpdateCardsPrice updateCardsPriceService;
+    private final FindCard findCardService;
 
     @Autowired
     public CardController(CardRepositoryImpl cardRepository,
@@ -31,22 +35,28 @@ public class CardController {
         this.crawlerService = new SaveCardsByCrawler(cardRepository, crawlerJsoup, futApi);
         this.overallsByPositionService = new LargestOverallsByPosition(cardRepository);
         this.updateCardsPriceService = new UpdateCardsPrice(cardRepository, futApi);
+        this.findCardService = new FindCard(cardRepository);
     }
 
-    @PostMapping("/crawler")
+    @PostMapping("crawler")
     public ResponseEntity<CrawlerResponse> saveCardsByCrawler(@Valid @RequestBody CrawlerRequest request,
                                                               @RequestParam String console) {
         return ResponseEntity.ok(crawlerService.execute(request.getInitialValue(), request.getFinalValue(), console));
     }
 
-    @GetMapping("/overalls")
+    @GetMapping("overalls")
     public ResponseEntity<List<CardResponse>> getLargestOverallsByPosition(OverallsRequest request) {
         return ResponseEntity.ok(overallsByPositionService.execute(request));
     }
 
-    @PutMapping("/prices")
-    public ResponseEntity<List<Card>> updateCardsPrice(@RequestParam Long initialId, @RequestParam Long finalId,
+    @PutMapping("prices")
+    public ResponseEntity<String> updateCardsPrice(@RequestParam Long initialId, @RequestParam Long finalId,
                                                        @RequestParam String console) {
         return ResponseEntity.ok(updateCardsPriceService.execute(initialId, finalId, console));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<CardDTO>> findByFilters(CardFilterDTO filterDTO) {
+        return ResponseEntity.ok(findCardService.execute(filterDTO));
     }
 }

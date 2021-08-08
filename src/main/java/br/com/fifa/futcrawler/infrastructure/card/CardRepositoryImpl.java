@@ -4,15 +4,17 @@ import br.com.fifa.futcrawler.application.card.request.OverallsRequest;
 import br.com.fifa.futcrawler.domain.card.Card;
 import br.com.fifa.futcrawler.domain.card.CardRepository;
 import br.com.fifa.futcrawler.domain.card.dto.CardDTO;
-import br.com.fifa.futcrawler.domain.position.Role;
+import br.com.fifa.futcrawler.domain.card.dto.CardFilterDTO;
+import br.com.fifa.futcrawler.domain.card.dto.CardInfoUpdateDTO;
 import br.com.fifa.futcrawler.domain.price.Price;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CardRepositoryImpl implements CardRepository {
@@ -24,17 +26,6 @@ public class CardRepositoryImpl implements CardRepository {
     @Autowired
     public CardRepositoryImpl(CardJpaRepository repository) {
         this.repository = repository;
-    }
-
-    @Override
-    public Optional<Card> findById(Long id) {
-        Optional<CardEntity> cardEntity = repository.findById(id);
-
-        if (cardEntity.isEmpty()) {
-            return Optional.empty();
-        }
-
-        return Optional.of(CardFacade.create(cardEntity.get()));
     }
 
     @Override
@@ -58,14 +49,8 @@ public class CardRepositoryImpl implements CardRepository {
     }
 
     @Override
-    public Optional<Card> findByNameAndRevision(String name, String revision) {
-        Optional<CardEntity> cardEntity = repository.findByNomeAndVersao(name, revision);
-
-        if (cardEntity.isEmpty()) {
-            return Optional.empty();
-        }
-
-        return Optional.of(CardFacade.create(cardEntity.get()));
+    public List<CardDTO> find(CardFilterDTO filterDTO) {
+        return repository.findByFilters(filterDTO);
     }
 
     @Override
@@ -74,8 +59,8 @@ public class CardRepositoryImpl implements CardRepository {
     }
 
     @Override
-    public List<Long> findAllOnlyIds(Long initialId, Long finalId) {
-        return repository.findAllOnlyIds(initialId, finalId);
+    public List<CardInfoUpdateDTO> findAllOnlyIdsResource(Long initialId, Long finalId) {
+        return repository.findAllOnlyIdsResource(initialId, finalId);
     }
 
     @Override
@@ -83,15 +68,15 @@ public class CardRepositoryImpl implements CardRepository {
         return repository.findOnlyResourceId(id);
     }
 
+    @Transactional
     @Override
-    public Card updatePrice(Long id, Price price) {
-        CardEntity cardEntity = repository
-                .findById(id)
-                .orElseThrow(() -> new RuntimeException("Card informado não foi encontrado"));
+    public void updatePrice(Long id, Price price) {
+        int result = repository.updatePrice(id, price.getCurrentValue(), price.getMinValue(),
+                price.getMaxValue(), LocalDateTime.now());
 
-        cardEntity.updatePrice(price);
-        repository.save(cardEntity);
-
-        return CardFacade.create(cardEntity);
+        if (result != 1) {
+            throw new RuntimeException(
+                    String.format("Ocorreu um erro ao realizar a atualização do preço do Card com Id %s", id));
+        }
     }
 }

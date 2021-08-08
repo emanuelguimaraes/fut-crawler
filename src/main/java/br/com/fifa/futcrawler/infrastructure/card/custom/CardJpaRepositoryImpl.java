@@ -2,6 +2,7 @@ package br.com.fifa.futcrawler.infrastructure.card.custom;
 
 import br.com.fifa.futcrawler.domain.attributes.chemistry.ChemistryType;
 import br.com.fifa.futcrawler.domain.card.dto.CardDTO;
+import br.com.fifa.futcrawler.domain.card.dto.CardFilterDTO;
 import br.com.fifa.futcrawler.domain.position.Role;
 import br.com.fifa.futcrawler.infrastructure.attributes.AttributesPlayerEntity;
 import br.com.fifa.futcrawler.infrastructure.attributes.AttributesPlayerEntity_;
@@ -22,6 +23,7 @@ import javax.persistence.criteria.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class CardJpaRepositoryImpl implements CardJpaCustomRepository {
@@ -29,6 +31,7 @@ public class CardJpaRepositoryImpl implements CardJpaCustomRepository {
     private static final int NUMBER_ONE = 1;
     private static final Integer MAX_VALUE_ATTRIBUTE = Integer.valueOf(99);
     private static final String LEAST_SQL_FUNCTION = "LEAST";
+    private static final String WILDCARD_PERCENT = "%";
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -131,6 +134,45 @@ public class CardJpaRepositoryImpl implements CardJpaCustomRepository {
                 .createQuery(query)
                 .setMaxResults(NUMBER_ONE)
                 .getSingleResult();
+    }
+
+    @Override
+    public List<CardDTO> findByFilters(CardFilterDTO filterDTO) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery query = builder.createQuery();
+
+        Root<CardEntity> rootCard = query.from(CardEntity.class);
+        Root<PriceEntity> rootPrice = query.from(PriceEntity.class);
+
+        List<Predicate> predicates = new ArrayList<>();
+
+        predicates.add(builder.equal(rootCard.get(CardEntity_.id),
+                rootPrice.get(PriceEntity_.card).get(CardEntity_.id)));
+
+        if (filterDTO.getId() != null) {
+            predicates.add(builder.equal(rootCard.get(CardEntity_.id), filterDTO.getId()));
+        }
+
+        if (filterDTO.getName() != null) {
+            predicates.add(builder.like(rootCard.get(CardEntity_.name),
+                    WILDCARD_PERCENT + filterDTO.getName() + WILDCARD_PERCENT));
+        }
+
+        query.select(builder.construct(
+                CardDTO.class,
+                rootCard.get(CardEntity_.id),
+                rootCard.get(CardEntity_.name),
+                rootCard.get(CardEntity_.club),
+                rootCard.get(CardEntity_.league),
+                rootCard.get(CardEntity_.nation),
+                rootCard.get(CardEntity_.position),
+                rootCard.get(CardEntity_.revision),
+                rootPrice.get(PriceEntity_.currentValue)))
+                .where(predicates.toArray(new Predicate[predicates.size()]));
+
+        return entityManager
+                .createQuery(query)
+                .getResultList();
     }
 
     private Expression<BigDecimal> generateOverall(BigDecimal thrustValue, CriteriaBuilder builder,

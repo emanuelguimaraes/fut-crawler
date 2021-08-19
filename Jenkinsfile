@@ -1,9 +1,39 @@
 pipeline {
-    agent { docker { image 'maven:3.3.3' } }
+    agent any
     stages {
-        stage('build') {
+        stage('Checkout') {
             steps {
-                sh 'mvn --version'
+                sh 'echo Checkout'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'echo Build'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'echo Test'
+            }
+        }
+        stage('Analysis') {
+            steps {
+                sh 'echo Analysis'
+            }
+        }
+        stage('Quality Gate') {
+            steps {
+                sh 'echo Quality Gate'
+            }
+        }
+        stage('Pre-Deploy') {
+            steps {
+                sh 'echo Pre-Deploy'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'echo Deploy'
             }
         }
     }

@@ -1,16 +1,39 @@
 version: '3.7'
 services:
-  server:
-    image: emanuelguimaraes23/fut-api:latest
+
+  database:
+    image: postgres:13.0
     environment:
-      FUT_DATABASE: ${FUT_DATABASE}
-      FUT_USER: ${FUT_USER}
-      FUT_PASSWORD: ${FUT_PASSWORD}
-      SPRING_PROFILES_ACTIVE: default
+      POSTGRES_PASSWORD: $FUT_PASSWORD
+      POSTGRES_USER: $FUT_USER
+      POSTGRES_DB: $FUT_DATABASE
     ports:
-      - '8080:8080'
+      - '5432:5432'
+    volumes:
+      - fut-database-path:/var/lib/postgresql/data
     networks:
       - fut-production
+
+#  server:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    environment:
+#      FUT_URL_DATABASE: $FUT_URL_DATABASE
+#      FUT_USER: $FUT_USER
+#      FUT_PASSWORD: $FUT_PASSWORD
+#      SPRING_PROFILES_ACTIVE: default
+#      DEBUG: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+#    ports:
+#      - '8080:8080'
+#    depends_on:
+#      - database
+#    networks:
+#      - fut-production
+volumes:
+  fut-database-path:
+    external: true
+
 networks:
   fut-production:
     driver: bridge

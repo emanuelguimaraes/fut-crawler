@@ -1,6 +1,15 @@
+FROM maven:3.8.2-openjdk-11 AS build
+RUN mkdir src
+COPY .. src
+WORKDIR src
+RUN mvn clean install
+
 FROM adoptopenjdk/openjdk11:alpine
-RUN addgroup -S spring && adduser -S spring -G spring
-USER spring:spring
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+EXPOSE 8080
+
+ARG JAR_FILE=/src/target/*.jar
+COPY --from=build ${JAR_FILE} app.jar
+
+ARG DEBUG=""
+
+ENTRYPOINT ["java", "${DEBUG}", "-jar","/app.jar"]
